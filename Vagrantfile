@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
   # of memory to even start up, so here we modify the memory size of
   # the VM in a VirtualBox-specific way (generally not recommended).
   config.vm.provider "virtualbox" do |v|
-    v.customize ['modifyvm', :id, "--memory", "2560"]
+    v.customize ['modifyvm', :id, "--memory", "4608"]
   end
 
   config.vm.hostname = "logserver-berkshelf"
@@ -26,7 +26,7 @@ Vagrant.configure("2") do |config|
   # via the IP. Host-only networks can talk to the host machine as well as
   # any other machines on the same network, but cannot be accessed (through this
   # network interface) by any external networks.
-  config.vm.network :private_network, ip: "33.33.33.10"
+  config.vm.network :private_network, ip: "33.33.33.9"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on

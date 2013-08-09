@@ -1,8 +1,27 @@
+set['logstash']['server']['source_url'] = "http://ops.evertrue.com.s3.amazonaws.com/pkgs/logstash-1.1.13-flatjar.jar"
 set['logstash']['server']['install_rabbitmq'] = false
 set['logstash']['server']['enable_embedded_es'] = false
+set['logstash']['server']['debug'] = true
+set['logstash']['agent']['debug'] = false
+
 set['logstash']['elasticsearch_ip'] = "127.0.0.1"
 
-# Inputs
+set['logstash']['agent']['inputs'] = [
+  'file' => {
+    'type' => 'rsyslog23',
+    'path' => '/var/log/rsyslog/**/*log',
+    'start_position' => 'beginning'
+  }
+]
+set['logstash']['agent']['outputs'] = [
+  'redis' => {
+    'host' => [ '127.0.0.1' ],
+    'data_type' => 'list',
+    'key' => 'logstash',
+    'batch' => 'true'
+  }
+]
+
 set['logstash']['server']['inputs'] = [
   'redis' => {
     'type' => 'redis-input',
@@ -10,36 +29,36 @@ set['logstash']['server']['inputs'] = [
     'data_type' => 'list',
     'key' => 'logstash',
     'format' => 'json_event'
-  },
-  'tcp' => {
-    'type' => 'syslog',
-    'port' => '5544'
-  },
-  'udp' => {
-    'type' => 'syslog',
-    'port' => '5544'
   }
 ]
-set['logstash']['server']['filters'] = 'grok {
-      type => "syslog",
-      pattern => [ "<%{POSINT:syslog_pri}>%{SYSLOGTIMESTAMP:syslog_timestamp} %{SYSLOGHOST:syslog_hostname} %{DATA:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{GREEDYDATA:syslog_message}" ],
-      add_field => [ "received_at", "%{@timestamp}" ],
-      add_field => [ "received_from", "%{@source_host}" ]
+
+set['logstash']['patterns'] = {
+  "rsyslog23" => {
+    "SYSLOG5424PRI" => "(?:\\<%{NONNEGINT}\\>)",
+    "SYSLOG5424SD" => "(?:\\[%{DATA}\\]+|-)",
+    "SYSLOG23LINE" => "(?:\\<%{NONNEGINT:syslog5424_pri}\\>)%{NONNEGINT:syslog5424_ver} (%{TIMESTAMP_ISO8601:syslog5424_ts}|-) (%{HOSTNAME:syslog5424_host}|-) (%{NOTSPACE:syslog5424_app}|-)( |-)?%{WORD:syslog5424_proc}? (%{WORD:syslog5424_msgid}|-) (?:\\[%{DATA:syslog5424_sd}\\]+|-) %{GREEDYDATA:syslog5424_msg}"
   }
-  syslog_pri {
-      type => "syslog"
+}
+
+set['logstash']['server']['filters'] = [
+  {
+    :grok => {
+      :type => "rsyslog23",
+      :pattern => [ "%{SYSLOG23LINE}" ],
+      :add_field => [ "received_at", "%{@timestamp}" ],
+      :add_field => [ "received_from", "%{@source_host}" ]
+    }
+  },
+  {
+    :syslog_pri => {
+      :type => "rsyslog23",
+      :syslog_pri_field_name => "syslog5424_pri"
+    }
+  },
+  {
+    :date => {
+      :type => "rsyslog23",
+      :match => [ "ISO8601" ]
+    }
   }
-  date => {
-      type => "syslog",
-      match => [ "syslog_timestamp", "MMM  d HH:mm:ss", "MMM dd HH:mm:ss" ]
-  }
-  mutate1 {
-      type => "syslog",
-      exclude_tags => "_grokparsefailure",
-      replace => [ "@source_host", "%{syslog_hostname}" ],
-      replace => [ "@message", "%{syslog_message}" ]
-  }
-  mutate2 {
-      type => "syslog",
-      remove => [ "syslog_hostname", "syslog_message", "syslog_timestamp" ]
-  }'
+]
