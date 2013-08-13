@@ -34,8 +34,6 @@ set['logstash']['server']['inputs'] = [
 
 set['logstash']['patterns'] = {
   "rsyslog23" => {
-    "SYSLOG5424PRI" => "(?:\\<%{NONNEGINT}\\>)",
-    "SYSLOG5424SD" => "(?:\\[%{DATA}\\]+|-)",
     "SYSLOG23LINE" => "(?:\\<%{NONNEGINT:syslog5424_pri}\\>)%{NONNEGINT:syslog5424_ver} (%{TIMESTAMP_ISO8601:syslog5424_ts}|-) (%{HOSTNAME:syslog5424_host}|-) (%{NOTSPACE:syslog5424_app}|-)( |-)?%{WORD:syslog5424_proc}? (%{WORD:syslog5424_msgid}|-) (?:\\[%{DATA:syslog5424_sd}\\]+|-) %{GREEDYDATA:syslog5424_msg}"
   }
 }

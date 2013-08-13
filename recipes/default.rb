@@ -15,7 +15,7 @@ include_recipe "redis::server"
 include_recipe "elasticsearch"
 include_recipe "logstash::server"
 include_recipe "logstash::agent"
-include_recipe "kibana"
+include_recipe "logserver::ui"
 include_recipe "logrotate"
 include_recipe "rsyslog::server"
 
