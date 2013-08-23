@@ -1,3 +1,10 @@
+## 1.3.0:
+
+* Disable redundant logrotate_app resource instance
+* Fix column width on Kibana dashboard
+* Fix FC002: Avoid string interpolation where not required: recipes/ui.rb:15
+* Added loadbalancer settings to attributes
+
 ## 1.2.0:
 
 * Added basic auth to UI

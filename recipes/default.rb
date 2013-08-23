@@ -15,6 +15,15 @@ include_recipe "redis::server"
 include_recipe "elasticsearch"
 include_recipe "logstash::server"
 include_recipe "logstash::agent"
+
+begin
+  t = resources(:template => "/etc/logrotate.d/logstash")
+  t.action :nothing
+rescue Chef::Exceptions::ResourceNotFound
+  Chef::Log.warn "Could not find template for " +
+    "\"/etc/logrotate.d/logstash\" to modify"
+end
+
 include_recipe "logserver::ui"
 include_recipe "logrotate"
 include_recipe "rsyslog::server"

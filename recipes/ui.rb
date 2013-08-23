@@ -12,7 +12,7 @@ dashboards_dir = "#{node['kibana']['installdir']}/current/dashboards"
 
 if node['kibana']['user'].empty?
   webserver = node['kibana']['webserver']
-  kibana_user = "#{node[webserver]['user']}"
+  kibana_user = node[webserver]['user']
 else
   kibana_user = node['kibana']['user']
 end
