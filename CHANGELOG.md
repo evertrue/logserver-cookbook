@@ -1,3 +1,7 @@
+## 1.3.0:
+
+* Added loadbalancer settings to attributes
+
 ## 1.2.0:
 
 * Added basic auth to UI
