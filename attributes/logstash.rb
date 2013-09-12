@@ -1,8 +1,6 @@
 set['logstash']['server']['source_url'] = "http://ops.evertrue.com.s3.amazonaws.com/pkgs/logstash-1.1.13-flatjar.jar"
 set['logstash']['server']['install_rabbitmq'] = false
 set['logstash']['server']['enable_embedded_es'] = false
-set['logstash']['server']['debug'] = true
-set['logstash']['agent']['debug'] = false
 
 set['logstash']['elasticsearch_ip'] = "127.0.0.1"
 

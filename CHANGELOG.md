@@ -1,3 +1,7 @@
+## 1.3.1:
+
+* Disable debug logging
+
 ## 1.3.0:
 
 * Disable redundant logrotate_app resource instance
