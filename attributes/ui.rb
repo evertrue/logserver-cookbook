@@ -1,3 +1,5 @@
+set['kibana']['branch'] = "v3.0.0milestone2"
+
 set['kibana']['webserver_listen'] = "0.0.0.0"
 default['kibana']['default_dashboard'] = "evertrue-logstash.json"
 default['kibana']['dashboard_conf'] = {

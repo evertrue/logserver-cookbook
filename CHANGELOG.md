@@ -1,3 +1,7 @@
+## 1.3.2:
+
+* Hardcode kibana release at v3.0.0milestone 2 until the Opscode Cookbook supports v3
+
 ## 1.3.1:
 
 * Disable debug logging
