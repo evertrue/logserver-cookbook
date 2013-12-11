@@ -6,6 +6,9 @@ Vagrant.configure('2') do |config|
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
 
+  # Install the latest Chef via vagrant-omnibus
+  config.omnibus.chef_version = :latest
+
   # Unlike most of the stuff we're testing, logstash requires >1024M
   # of memory to even start up, so here we modify the memory size of
   # the VM in a VirtualBox-specific way (generally not recommended).
@@ -76,8 +79,6 @@ Vagrant.configure('2') do |config|
   # An array of symbols representing groups of cookbook described in the Vagrantfile
   # to skip installing and copying to Vagrant's shelf.
   # config.berkshelf.except = []
-
-  config.vm.provision :shell, :inline => "curl -s -L https://www.opscode.com/chef/install.sh | sudo bash"
 
   config.vm.synced_folder "vagrantsync/", "/vagrantsync"
 
