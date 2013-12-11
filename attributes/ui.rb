@@ -1,10 +1,10 @@
-set['kibana']['webserver_listen'] = "0.0.0.0"
-default['kibana']['default_dashboard'] = "evertrue-logstash.json"
+set['kibana']['webserver_listen'] = '0.0.0.0'
+default['kibana']['default_dashboard'] = 'evertrue-logstash.json'
 default['kibana']['dashboard_conf'] = {
-  'time_field' => "@fields.syslog5424_ts",
+  'time_field' => '@fields.syslog5424_ts',
   'dashboards' => {
     'events' => {
-      'sort_field' => "@fields.syslog5424_ts",
+      'sort_field' => '@fields.syslog5424_ts',
       'fields' => [
         '@fields.syslog5424_pri',
         '@fields.syslog5424_ts',
@@ -19,25 +19,25 @@ default['kibana']['dashboard_conf'] = {
 }
 
 default['loadbalancer'] = {
-  "app_family" => "ops",
-  "acls" => {
-    "host_logs" => {
-      "type" => "hdr_beg(host)",
-      "match" => "logs.evertrue.com"
+  'app_family' => 'ops',
+  'acls' => {
+    'host_logs' => {
+      'type' => 'hdr_beg(host)',
+      'match' => 'logs.evertrue.com'
     }
   },
-  "applications" => {
-    "logs" => {
-      "acls" => [[ "host_logs" ]],
-      "ssl_enabled" => true,
-      "ssl_required" => true
+  'applications' => {
+    'logs' => {
+      'acls' => [['host_logs']],
+      'ssl_enabled' => true,
+      'ssl_required' => true
     }
   },
-  "backends" => {
-    "logs" => {
-      "balance_algorithm" => "roundrobin",
-      "check_req" => { "always" => true },
-      "port" => "80"
+  'backends' => {
+    'logs' => {
+      'balance_algorithm' => 'roundrobin',
+      'check_req' => { 'always' => true },
+      'port' => '80'
     }
   }
 }
