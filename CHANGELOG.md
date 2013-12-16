@@ -1,3 +1,11 @@
+## 1.3.2:
+
+* Use bleeding-edge version of Kibana cookbook & Redis cookbook to fix some bugs
+* Use built source of Kibana instead of cloning entire repository
+* Clean up some code (Ruby style, Vagrantfile, etc.)
+* Pin Berkshelf to ~> 2.0.10
+* Remove unused attributes
+
 ## 1.3.1:
 
 * Disable debug logging
