@@ -17,3 +17,4 @@ default['kibana']['dashboard_conf'] = {
     }
   }
 }
+set['kibana']['install_type'] = 'file'

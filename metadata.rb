@@ -8,7 +8,7 @@ version          '1.3.1'
 
 depends 'apt'
 depends 'redis'
-depends 'kibana'
+depends 'kibana', '~> 1.2.0'
 depends 'htpasswd'
 depends 'elasticsearch'
 depends 'logrotate'
