@@ -17,27 +17,3 @@ default['kibana']['dashboard_conf'] = {
     }
   }
 }
-
-default['loadbalancer'] = {
-  'app_family' => 'ops',
-  'acls' => {
-    'host_logs' => {
-      'type' => 'hdr_beg(host)',
-      'match' => 'logs.evertrue.com'
-    }
-  },
-  'applications' => {
-    'logs' => {
-      'acls' => [['host_logs']],
-      'ssl_enabled' => true,
-      'ssl_required' => true
-    }
-  },
-  'backends' => {
-    'logs' => {
-      'balance_algorithm' => 'roundrobin',
-      'check_req' => { 'always' => true },
-      'port' => '80'
-    }
-  }
-}
