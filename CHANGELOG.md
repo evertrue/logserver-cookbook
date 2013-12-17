@@ -1,3 +1,7 @@
+## 1.3.3:
+
+* Use correct path to Kibana dashboards to install our custom dashboard
+
 ## 1.3.2:
 
 * Use bleeding-edge version of Kibana cookbook & Redis cookbook to fix some bugs
