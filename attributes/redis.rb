@@ -1,3 +1,6 @@
 set['redis']['install_type'] = 'source'
 set['redis']['config']['loglevel'] = 'debug'
 set['redis']['config']['logfile'] = '/var/log/redis.log'
+set['redis']['source']['url'] = 'http://download.redis.io/releases/'
+set['redis']['source']['version'] = '2.8.3'
+set['redis']['source']['sha'] = 'a751371eeed5f5f02965eb34d989c1963dd8d8c7'
