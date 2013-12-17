@@ -1,3 +1,7 @@
+## 1.3.5:
+
+* Clean up Logstash Kibana dashboard JSON
+
 ## 1.3.4:
 
 * Upgrade to Redis 2.8.3
