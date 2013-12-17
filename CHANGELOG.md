@@ -1,3 +1,7 @@
+## 1.3.4:
+
+* Upgrade to Redis 2.8.3
+
 ## 1.3.3:
 
 * Use correct path to Kibana dashboards to install our custom dashboard
