@@ -8,7 +8,7 @@ end
 include_recipe 'kibana'
 include_recipe 'htpasswd'
 
-dashboards_dir = "#{node['kibana']['installdir']}/current/dashboards"
+dashboards_dir = "#{node['kibana']['web_dir']}/app/dashboards"
 
 if node['kibana']['user'].empty?
   webserver = node['kibana']['webserver']
