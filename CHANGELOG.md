@@ -1,3 +1,7 @@
+## 1.3.6:
+
+* Clean up default dashboard display
+
 ## 1.3.5:
 
 * Clean up Logstash Kibana dashboard JSON
