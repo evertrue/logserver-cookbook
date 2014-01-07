@@ -1,6 +1,26 @@
+## 1.3.6:
+
+* Clean up default dashboard display
+
+## 1.3.5:
+
+* Clean up Logstash Kibana dashboard JSON
+
+## 1.3.4:
+
+* Upgrade to Redis 2.8.3
+
+## 1.3.3:
+
+* Use correct path to Kibana dashboards to install our custom dashboard
+
 ## 1.3.2:
 
-* Hardcode kibana release at v3.0.0milestone 2 until the Opscode Cookbook supports v3
+* Use bleeding-edge version of Kibana cookbook & Redis cookbook to fix some bugs
+* Use built source of Kibana instead of cloning entire repository
+* Clean up some code (Ruby style, Vagrantfile, etc.)
+* Pin Berkshelf to ~> 2.0.10
+* Remove unused attributes
 
 ## 1.3.1:
 

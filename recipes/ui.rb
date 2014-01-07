@@ -5,10 +5,10 @@ if node['logstash']['elasticsearch_port'] &&
   node.set['kibana']['es_port'] = node['logstash']['elasticsearch_port']
 end
 
-include_recipe "kibana"
-include_recipe "htpasswd"
+include_recipe 'kibana'
+include_recipe 'htpasswd'
 
-dashboards_dir = "#{node['kibana']['installdir']}/current/dashboards"
+dashboards_dir = "#{node['kibana']['web_dir']}/app/dashboards"
 
 if node['kibana']['user'].empty?
   webserver = node['kibana']['webserver']
@@ -18,7 +18,7 @@ else
 end
 
 template "#{dashboards_dir}/#{node['kibana']['default_dashboard']}" do
-  source "evertrue-logstash.json.erb"
+  source 'evertrue-logstash.json.erb'
   owner kibana_user
   mode 00644
 end
@@ -34,13 +34,13 @@ link "#{dashboards_dir}/default.json" do
 end
 
 begin
-  t = resources(:template => "/etc/nginx/sites-available/kibana")
+  t = resources(template: '/etc/nginx/sites-available/kibana')
   t.cookbook cookbook_name.to_s
 rescue Chef::Exceptions::ResourceNotFound
-  Chef::Log.warn "Could not find template /etc/nginx/sites-available/kibana"
+  Chef::Log.warn 'Could not find template /etc/nginx/sites-available/kibana'
 end
 
-ui_creds = Chef::EncryptedDataBagItem.load("secrets","logserver")[node.chef_environment]['ui']
+ui_creds = Chef::EncryptedDataBagItem.load('secrets', 'logserver')[node.chef_environment]['ui']
 
 htpasswd "#{node['nginx']['dir']}/htpasswd" do
   user ui_creds['website_user']
