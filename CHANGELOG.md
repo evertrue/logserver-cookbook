@@ -1,3 +1,7 @@
+## 1.3.7
+
+* Set custom config value bulk.udp.enabled to true
+
 ## 1.3.6:
 
 * Clean up default dashboard display
