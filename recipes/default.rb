@@ -11,10 +11,14 @@ when 'debian'
   include_recipe 'apt'
 end
 
-include_recipe 'redis::server'
-include_recipe 'elasticsearch'
-include_recipe 'logstash::server'
-include_recipe 'logstash::agent'
+file node['redis']['config']['logfile'] do
+  action :create_if_missing
+end
+
+include_recipe "redis::server"
+include_recipe "elasticsearch"
+include_recipe "logstash::server"
+include_recipe "logstash::agent"
 
 begin
   t = resources(template: '/etc/logrotate.d/logstash')

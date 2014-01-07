@@ -1,6 +1,7 @@
 ## 1.3.7
 
 * Set custom config value bulk.udp.enabled to true
+* Pre-create redis log file
 
 ## 1.3.6:
 
