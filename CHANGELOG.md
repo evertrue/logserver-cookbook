@@ -1,3 +1,7 @@
+## 1.4.0
+
+* Enable udp injection
+
 ## 1.3.7
 
 * Set custom config value bulk.udp.enabled to true

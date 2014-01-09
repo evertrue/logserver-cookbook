@@ -27,6 +27,11 @@ set['logstash']['server']['inputs'] = [
     'data_type' => 'list',
     'key' => 'logstash',
     'format' => 'json_event'
+  },
+  'udp' => {
+    'format' => 'json_event',
+    'host' => '0.0.0.0',
+    'type' => 'logstash-logger'
   }
 ]
 
@@ -37,6 +42,12 @@ set['logstash']['patterns'] = {
 }
 
 set['logstash']['server']['filters'] = [
+  {
+    json: {
+      source: 'message',
+      type: 'logstash-logger'
+    }
+  },
   {
     grok: {
       type: 'rsyslog23',
