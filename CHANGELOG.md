@@ -1,3 +1,9 @@
+## 1.5.0
+
+* add support for multiple index names for _aliases call
+* New ref for kibana: cf87e131b08071bf846b253cc49146da76077ef6
+* Lock in a specific kibana UI release
+
 ## 1.4.0
 
 * Enable udp injection
