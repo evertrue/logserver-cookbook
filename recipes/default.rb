@@ -40,7 +40,6 @@ end
 
 begin
   %w{
-    /etc/rsyslog.conf
     /etc/rsyslog.d/35-server-per-host.conf
   }.each do |conf_file|
     t = resources(template: conf_file)

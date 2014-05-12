@@ -13,6 +13,6 @@ depends 'htpasswd'
 depends 'elasticsearch'
 depends 'logrotate'
 depends 'logstash'
-depends 'rsyslog'
+depends 'rsyslog', '~> 1.12.2'
 
 provides 'logserver'
