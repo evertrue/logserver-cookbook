@@ -1,5 +1,4 @@
-chef_api :config
-site :opscode
+source 'http://api.berkshelf.com'
 
 metadata
 

@@ -1,0 +1,28 @@
+---
+driver:
+  name: vagrant
+  require_chef_omnibus: true
+
+provisioner:
+  name: chef_zero
+  encrypted_data_bag_secret_key_path: <%= ENV['HOME'] %>/.chef/encrypted_data_bag_secret
+  data_bags_path: <%= ENV['CHEF_REPO'] %>/data_bags
+  environments_path: <%= ENV['CHEF_REPO'] %>/environments
+  client_rb:
+    environment: _default
+
+platforms:
+- name: ubuntu-12.04
+  driver_config:
+    customize:
+      cpus: 4
+      memory: 4608
+
+suites:
+- name: default
+  run_list:
+    - recipe[logserver]
+    # - role[loghost]
+  attributes:
+    # nginx:
+    #   port: 8123
