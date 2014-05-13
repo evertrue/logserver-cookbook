@@ -1,9 +1,9 @@
-set['kibana']['webserver_listen'] = "0.0.0.0"
+set['kibana']['webserver_listen'] = '0.0.0.0'
 
-set['kibana']['file']['url'] = "http://ops.evertrue.com.s3.amazonaws.com/pkgs/kibana-3.0.0milestone5.zip"
-set['kibana']['file']['checksum'] = "8c821442293c258c07df426502327387e64ffb28f5d9b1d44dcfa3160c7db339"
+set['kibana']['file']['url'] = 'http://ops.evertrue.com.s3.amazonaws.com/pkgs/kibana-3.0.0milestone5.zip'
+set['kibana']['file']['checksum'] = '8c821442293c258c07df426502327387e64ffb28f5d9b1d44dcfa3160c7db339'
 
-default['kibana']['default_dashboard'] = "evertrue-logstash.json"
+default['kibana']['default_dashboard'] = 'evertrue-logstash.json'
 default['kibana']['dashboard_conf'] = {
   'time_field' => '@fields.syslog5424_ts',
   'dashboards' => {
