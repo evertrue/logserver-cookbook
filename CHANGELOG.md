@@ -2,6 +2,14 @@ logserver cookbook CHANGELOG
 ============================
 This file is used to list changes made in each version of the logserver cookbook.
 
+v1.6.0 (2014-05-13)
+-------------------
+
+* Ping rsyslog dependency to v1.12.2
+* Remove rsyslog.conf.erb template & adjust attributes as needed to maintain current functionality
+* Set up Test Kitchen, Berkshelf 3, and Rake tasks for testing
+
+
 v1.5.0 (2014-01-09)
 ------------------
 
