@@ -2,6 +2,11 @@ logserver cookbook CHANGELOG
 ============================
 This file is used to list changes made in each version of the logserver cookbook.
 
+v1.6.1 (2014-06-03)
+-------------------
+
+* Fix template compatibility problems with new version of rsyslog cookbook
+
 v1.6.0 (2014-05-13)
 -------------------
 

@@ -4,7 +4,7 @@ maintainer_email 'devops@evertrue.com'
 license          'All rights reserved'
 description      'Installs/Configures logserver'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '1.6.0'
+version          '1.6.1'
 
 depends 'apt'
 depends 'redis'
