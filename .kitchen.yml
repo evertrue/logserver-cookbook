@@ -30,7 +30,4 @@ suites:
 - name: default
   run_list:
     - recipe[logserver]
-    # - role[loghost]
   attributes:
-    # nginx:
-    #   port: 8123
