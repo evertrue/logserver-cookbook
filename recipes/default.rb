@@ -11,11 +11,6 @@ when 'debian'
   include_recipe 'apt'
 end
 
-file node['redis']['config']['logfile'] do
-  action :create_if_missing
-end
-
-include_recipe 'redis::server'
 include_recipe 'elasticsearch'
 include_recipe 'logstash::server'
 include_recipe 'logstash::agent'
@@ -31,12 +26,6 @@ end
 include_recipe 'logserver::ui'
 include_recipe 'logrotate'
 include_recipe 'rsyslog::server'
-
-logrotate_app 'redis_server' do
-  path node['redis']['config']['logfile']
-  frequency 'daily'
-  rotate '10'
-end
 
 begin
   %w(

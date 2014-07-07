@@ -7,7 +7,6 @@ long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '1.6.1'
 
 depends 'apt'
-depends 'redis'
 depends 'java'
 depends 'kibana', '= 1.2.1'
 depends 'htpasswd'

@@ -13,7 +13,7 @@ set['logstash']['agent']['inputs'] = [
 ]
 set['logstash']['agent']['outputs'] = [
   'redis' => {
-    'host' => ['127.0.0.1'],
+    'host' => ['dev-logstash.vwbbgm.0001.use1.cache.amazonaws.com'],
     'data_type' => 'list',
     'key' => 'logstash',
     'batch' => 'true'
@@ -23,7 +23,7 @@ set['logstash']['agent']['outputs'] = [
 set['logstash']['server']['inputs'] = [
   'redis' => {
     'type' => 'redis-input',
-    'host' => '127.0.0.1',
+    'host' => 'dev-logstash.vwbbgm.0001.use1.cache.amazonaws.com',
     'data_type' => 'list',
     'key' => 'logstash',
     'format' => 'json_event'
