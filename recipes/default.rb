@@ -11,6 +11,7 @@ when 'debian'
   include_recipe 'apt'
 end
 
+include_recipe 'java'
 include_recipe 'elasticsearch'
 include_recipe 'logstash::server'
 include_recipe 'logstash::agent'
