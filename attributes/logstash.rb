@@ -1,5 +1,3 @@
-set['logstash']['server']['source_url'] = 'http://ops.evertrue.com.s3.amazonaws.com/pkgs/logstash-1.1.13-flatjar.jar'
-set['logstash']['server']['install_rabbitmq'] = false
 set['logstash']['server']['enable_embedded_es'] = false
 
 set['logstash']['elasticsearch_ip'] = '127.0.0.1'
@@ -26,11 +24,12 @@ set['logstash']['server']['inputs'] = [
     'host' => 'dev-logstash.vwbbgm.0001.use1.cache.amazonaws.com',
     'data_type' => 'list',
     'key' => 'logstash',
-    'format' => 'json_event'
+    'codec' => 'json'
   },
   'udp' => {
-    'format' => 'json_event',
+    'codec' => 'json',
     'host' => '0.0.0.0',
+    'port' => '5228',
     'type' => 'logstash-logger'
   }
 ]
@@ -43,29 +42,27 @@ set['logstash']['patterns'] = {
 
 set['logstash']['server']['filters'] = [
   {
-    json: {
-      source: 'message',
-      type: 'logstash-logger'
+    condition: 'if [type] == "logstash-logger"',
+    block: {
+      json: {
+        source: 'message'
+      }
     }
   },
   {
-    grok: {
-      type: 'rsyslog23',
-      pattern: ['%{SYSLOG23LINE}'],
-      add_field: ['received_at', '%{@timestamp}'],
-      add_field: ['received_from', '%{@source_host}']
-    }
-  },
-  {
-    syslog_pri: {
-      type: 'rsyslog23',
-      syslog_pri_field_name: 'syslog5424_pri'
-    }
-  },
-  {
-    date: {
-      type: 'rsyslog23',
-      match: ['ISO8601']
+    condition: 'if [type] == "rsyslog23"',
+    block: {
+      grok: {
+        match: ['message', '%{SYSLOG23LINE}'],
+        add_field: ['received_at', '%{@timestamp}'],
+        add_field: ['received_from', '%{@source_host}']
+      },
+      syslog_pri: {
+        syslog_pri_field_name: 'syslog5424_pri'
+      },
+      date: {
+        match: ['syslog5424_ts', 'ISO8601']
+      }
     }
   }
 ]
