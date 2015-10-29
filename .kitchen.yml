@@ -1,33 +1,20 @@
 ---
 driver:
-  name: ec2
-  require_chef_omnibus: true
-  aws_access_key_id: <%= ENV['AWS_ACCESS_KEY_ID'] %>
-  aws_secret_access_key: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
-  aws_ssh_key_id: <%= ENV['AWS_KEYPAIR_NAME'] %>
-  ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
-  region: us-east-1
-  availability_zone: us-east-1b
-  security_group_ids: ['ci-testing']
-  username: ubuntu
-  flavor_id: c3.large
-  interface: public
+  name: vagrant
+  customize:
+    cpus: 4
+    memory: 4096
 
 provisioner:
   name: chef_zero
-  encrypted_data_bag_secret_key_path: <%= ENV['HOME'] %>/.chef/encrypted_data_bag_secret
-  client_rb:
+  config_rb:
     environment: dev
 
 platforms:
-- name: ubuntu-12.04
-  driver_config:
-    customize:
-      cpus: 4
-      memory: 4608
+  - name: ubuntu-14.04
 
 suites:
-- name: default
-  run_list:
-    - recipe[logserver]
-  attributes:
+  - name: default
+    run_list:
+      - recipe[logserver::default]
+    attributes:
