@@ -1,0 +1,23 @@
+# no filters or mutators should be placed here, we preserve as much as possible by this stage
+output {
+  elasticsearch {
+<% unless @elasticsearch['host'].empty? -%>
+    host => "<%= @elasticsearch['host'] %>"
+<% end -%>
+<% unless @elasticsearch['cluster'].empty? -%>
+    cluster => "<%= @elasticsearch['cluster'] %>"
+<% end -%>
+<% unless @elasticsearch['embedded'].nil? -%>
+    embedded => <%= @elasticsearch['embedded'] %>
+<% end -%>
+<% unless @elasticsearch['bind_host'].empty? -%>
+    bind_host => "<%= @elasticsearch['bind_host'] %>"
+<% end -%>
+<% unless @elasticsearch['index'].empty? -%>
+    index => "<%= @elasticsearch['index'] %>"
+<% end -%>
+<% unless @elasticsearch['protocol'].empty? -%>
+    protocol => "<%= @elasticsearch['protocol'] %>"
+<% end -%>
+  }
+}

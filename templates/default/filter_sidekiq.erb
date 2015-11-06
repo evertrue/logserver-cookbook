@@ -1,0 +1,14 @@
+filter {
+  if [type] == "sidekiq" {
+    grok {
+      match => {
+        "message" => "%{SIDEKIQ}"
+      }
+    }
+
+    date {
+      match => ["timestamp", "ISO8601"]
+      remove_field => ["timestamp"]
+    }
+  }
+}
