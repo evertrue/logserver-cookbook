@@ -4,6 +4,28 @@ node.set['logstash']['instance']['server']['config_templates_cookbook'] =
 node.set['logstash']['instance']['server']['pattern_templates_cookbook'] =
   cookbook_name
 
+################
+# Certificates #
+################
+certs = data_bag_item(
+  node['logserver']['cert_data_bag'],
+  node['logserver']['cert_data_bag_item']
+)['data']
+
+ssl_files_to_process = %w(key certificate)
+
+ssl_files_to_process.each do |c|
+  directory File.dirname(node['logserver']['lumberjack']["ssl #{c}"]) do
+    recursive true
+  end
+
+  file node['logserver']['lumberjack']["ssl #{c}"] do
+    content certs[c]
+    mode '600'
+    notifies :restart, 'service[logstash_server]'
+  end
+end
+
 ############
 # Patterns #
 ############
