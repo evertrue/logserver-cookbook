@@ -1,4 +1,3 @@
-fail "The cookbook_name is #{cookbook_name}"
 
 node.set['logstash']['instance']['server']['config_templates_cookbook'] =
   cookbook_name
