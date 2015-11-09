@@ -2,12 +2,6 @@ require 'spec_helper'
 
 describe 'et_elk::default' do
   describe 'filter config' do
-    describe command('/opt/logstash/server/bin/logstash -f ' \
-                     '/opt/logstash/server/etc/conf.d/ --configtest') do
-      its(:exit_status) { should eq 0 }
-      its(:stdout) { should match(/Configuration OK/) }
-    end
-
     %w(
       filter_000_common
       filter_haproxy_http
