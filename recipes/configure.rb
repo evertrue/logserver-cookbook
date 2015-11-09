@@ -22,7 +22,7 @@ ssl_files_to_process.each do |c|
   file node['logserver']['lumberjack']["ssl #{c}"] do
     content certs[c]
     mode '600'
-    notifies :restart, 'service[logstash_server]'
+    notifies :restart, 'logstash_service[server]'
   end
 end
 
