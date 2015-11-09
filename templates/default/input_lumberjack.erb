@@ -3,13 +3,17 @@ input {
   lumberjack {
     add_field => {
       "x_input_processor" => "lumberjack"
-<% @lumberjack['add_field'].each do |key, val| %>
-      "<%= key %>" => "<%= val %>"
-<% end %>
+      <%-if @lumberjack['add_field'] %>
+        add_field {
+        <% @lumberjack['add_field'].each do |key, val| %>
+          "<%= key %>" => "<%= val %>",
+        <% end %>
+        }
+      <% end %>
     }
-    codec => <%= @lumberjack['codec'] %>
+    codec => "<%= @lumberjack['codec'] %>"
     host => "<%= @lumberjack['host'] %>"
-    port => "<%= @lumberjack['port'] %>"
+    port => <%= @lumberjack['port'] %>
     ssl_certificate => "<%= @lumberjack['ssl certificate'] %>"
     ssl_key => "<%= @lumberjack['ssl key'] %>"
   }
