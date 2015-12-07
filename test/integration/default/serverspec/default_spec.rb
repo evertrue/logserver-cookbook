@@ -53,31 +53,16 @@ describe 'et_elk::default' do
 
   describe 'filter config' do
     %w(
-      filter_000_common
-      filter_haproxy_http
-      filter_java
-      filter_mesos
-      filter_nginx
-      filter_rails_app
-      filter_syslog
-      input_lumberjack
-      output_elasticsearch
+      000_common
+      haproxy_http
+      java
+      mesos
+      nginx
+      rails_app
+      syslog
     ).each do |conf_file|
-      describe file("/opt/logstash/server/etc/conf.d/#{conf_file}") do
+      describe file("/opt/logstash/server/etc/conf.d/filter_#{conf_file}") do
         it { is_expected.to be_file }
-      end
-    end
-
-    %w(
-      filter_000_common
-      filter_haproxy_http
-      filter_java
-      filter_mesos
-      filter_nginx
-      filter_rails_app
-      filter_syslog
-    ).each do |filter_conf|
-      describe file("/opt/logstash/server/etc/conf.d/#{filter_conf}") do
         its(:content) { should match 'filter' }
       end
     end
@@ -86,6 +71,17 @@ describe 'et_elk::default' do
                      '/opt/logstash/server/etc/conf.d/ --configtest') do
       its(:exit_status) { should eq 0 }
       its(:stdout) { should match(/Configuration OK/) }
+    end
+  end
+
+  describe 'input/output config' do
+    %w(
+      input_lumberjack
+      output_elasticsearch
+    ).each do |conf_file|
+      describe file("/opt/logstash/server/etc/conf.d/#{conf_file}") do
+        it { is_expected.to be_file }
+      end
     end
   end
 end
