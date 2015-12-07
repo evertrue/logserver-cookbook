@@ -18,3 +18,10 @@ suites:
     run_list:
       - recipe[logserver::default]
     attributes:
+      logserver:
+        generate_cert: true
+      elk_forwarder:
+        generate_cert: true
+        ca_cert:
+          self_signed:
+            signing_key: /etc/logstash/lumberjack.key.pem
