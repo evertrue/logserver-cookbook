@@ -1,6 +1,36 @@
 require 'spec_helper'
+require 'json'
+require 'net/http'
 
 describe 'et_elk::default' do
+  describe 'cluster' do
+    it 'shows green status' do
+      expect(
+        JSON.parse(
+          Net::HTTP.get(
+            URI('http://localhost:9200/_cluster/health')
+          )
+        )['status']
+      ).to eq 'green'
+    end
+  end
+
+  describe 'log data' do
+    it 'inserted into Elasticsearch' do
+      index_date = Time.now.strftime '%Y.%m.%d'
+      expect(
+        JSON.parse(
+          Net::HTTP.get(
+            URI(
+              "http://localhost:9200/logstash-#{index_date}/_search" \
+              '?q=message:TEST_LOG_MESSAGE'
+            )
+          )
+        )['hits']['hits'].first['_source']['message']
+      ).to match(/TEST_LOG_MESSAGE/)
+    end
+  end
+
   describe 'filter config' do
     %w(
       filter_000_common

@@ -16,8 +16,10 @@ platforms:
 suites:
   - name: default
     run_list:
+      - recipe[log_data::default]
       - recipe[logserver::default]
       - role[es_master]
+      - recipe[et_logger::forwarder]
     attributes:
       logserver:
         generate_cert: true
