@@ -31,6 +31,14 @@ describe 'et_elk::default' do
     end
   end
 
+  describe 'services' do
+    %w(elasticsearch logstash_server).each do |svc|
+      describe service(svc) do
+        it { is_expected.to be_running }
+      end
+    end
+  end
+
   describe 'filter config' do
     %w(
       filter_000_common
