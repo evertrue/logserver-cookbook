@@ -17,6 +17,7 @@ suites:
   - name: default
     run_list:
       - recipe[logserver::default]
+      - role[es_master]
     attributes:
       logserver:
         generate_cert: true
