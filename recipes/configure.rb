@@ -4,9 +4,14 @@
 #
 # Copyright (c) 2015 EverTrue, inc, All Rights Reserved.
 
-node.set['logstash']['instance']['server']['config_templates_cookbook'] =
+instance_name = 'server'
+instance_conf_dir =
+  "#{node['logstash']['instance'][instance_name]['basedir']}/" \
+  "#{instance_name}/etc/conf.d"
+
+node.set['logstash']['instance'][instance_name]['config_templates_cookbook'] =
   cookbook_name
-node.set['logstash']['instance']['server']['pattern_templates_cookbook'] =
+node.set['logstash']['instance'][instance_name]['pattern_templates_cookbook'] =
   cookbook_name
 
 ################
@@ -19,7 +24,7 @@ include_recipe 'logserver::certs'
 ############
 logstash_pattern 'evertrue patterns' do
   templates 'evertrue_patterns' => 'evertrue_patterns.erb'
-  instance 'server'
+  instance instance_name
 end
 
 ############
@@ -27,42 +32,36 @@ end
 ############
 logstash_config 'lumberjack input' do
   templates 'input_lumberjack' => 'input_lumberjack.erb'
-  instance 'server'
+  instance instance_name
   variables node['logserver']
-  notifies :restart, 'logstash_service[server]'
+  notifies :restart, "logstash_service[#{instance_name}]"
 end
 
 logstash_config 'log4j input' do
   templates 'input_log4j' => 'input_log4j.erb'
-  instance 'server'
+  instance instance_name
   variables node['logserver']
-  notifies :restart, 'logstash_service[server]'
+  notifies :restart, "logstash_service[#{instance_name}]"
 end
 
 ############
 # Filters  #
 ############
-logstash_config 'common filter' do
-  templates 'filter_000_common' => 'filter_common.erb'
-  instance 'server'
-end
-
-logstash_config 'application filters' do
-  # The logstash code insists on having a hash here (rather than an array) even
-  # though it works fine without the values, so we set them all to nil.
-  templates(
-    %w(
-      syslog
-      rails_app
-      java
-      haproxy_http
-      nginx
-      mesos
-      sidekiq
-    ).each_with_object({}) { |f, m| m["filter_#{f}"] = nil }
-  )
-  instance 'server'
-  notifies :restart, 'logstash_service[server]'
+%w(
+  000_common
+  syslog
+  rails_app
+  java
+  haproxy_http
+  nginx
+  mesos
+  sidekiq
+).each do |filter|
+  cookbook_file "#{instance_conf_dir}/filter_#{filter}" do
+    owner node['logstash']['instance_default']['user']
+    group node['logstash']['group']
+    mode  0644
+  end
 end
 
 ############
@@ -70,7 +69,7 @@ end
 ############
 logstash_config 'elasticsearch output' do
   templates 'output_elasticsearch' => 'output_elasticsearch.erb'
-  instance 'server'
-  variables node['et_elk']['server']
-  notifies :restart, 'logstash_service[server]'
+  instance instance_name
+  variables node['et_elk'][instance_name]
+  notifies :restart, "logstash_service[#{instance_name}]"
 end
