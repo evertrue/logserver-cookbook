@@ -37,6 +37,18 @@ describe 'et_elk::default' do
         it { is_expected.to be_running }
       end
     end
+
+    [9200, 9300, 5601].each do |cur_port|
+      describe port(cur_port) do
+        it { is_expected.to be_listening.with('tcp') }
+      end
+    end
+
+    [5043, 5044].each do |cur_port|
+      describe port(cur_port) do
+        it { is_expected.to be_listening.with('tcp6') }
+      end
+    end
   end
 
   describe 'filter config' do
