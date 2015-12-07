@@ -5,4 +5,5 @@ metadata
 
 group :integration do
   cookbook 'log_data', path: 'test/integration/cookbooks/log_data'
+  cookbook 'et_logger'
 end
