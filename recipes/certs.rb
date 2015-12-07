@@ -1,3 +1,9 @@
+#
+# Cookbook Name:: logserver
+# Recipe:: certs
+#
+# Copyright (c) 2015 EverTrue, inc, All Rights Reserved.
+
 ssl_object = data_bag_item(
   node['logserver']['certs']['data_bag'],
   node['logserver']['certs']['data_bag_item']

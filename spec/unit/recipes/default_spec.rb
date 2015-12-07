@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: et_elk
+# Cookbook Name:: logserver
 # Spec:: default
 #
 # Copyright 2015 EverTrue, inc.

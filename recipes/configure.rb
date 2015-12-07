@@ -1,3 +1,8 @@
+#
+# Cookbook Name:: logserver
+# Recipe:: configure
+#
+# Copyright (c) 2015 EverTrue, inc, All Rights Reserved.
 
 node.set['logstash']['instance']['server']['config_templates_cookbook'] =
   cookbook_name
