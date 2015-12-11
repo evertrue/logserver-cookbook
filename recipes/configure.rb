@@ -16,7 +16,7 @@ include_recipe 'logserver::certs'
 ############
 instance_basedir = node['logstash']['instance_default']['basedir']
 
-cookbook_file "#{instance_basedir}/patterns/evertrue_patterns" do
+cookbook_file "#{instance_basedir}/#{instance_name}/patterns/evertrue_patterns" do
   owner node['logstash']['instance_default']['user']
   group node['logstash']['group']
   notifies :restart, "logstash_service[#{instance_name}]"
