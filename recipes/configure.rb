@@ -38,6 +38,5 @@ end
   cookbook_file "#{instance_basedir}/#{instance_name}/etc/conf.d/filter_#{filter}" do
     owner node['logstash']['instance_default']['user']
     group node['logstash']['group']
-    mode  0644
   end
 end
