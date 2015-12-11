@@ -44,9 +44,9 @@ logstash_config 'log4j input' do
   notifies :restart, "logstash_service[#{instance_name}]"
 end
 
-############
-# Filters  #
-############
+###########
+# Filters #
+###########
 %w(
   000_common
   syslog
