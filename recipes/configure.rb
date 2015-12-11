@@ -6,9 +6,6 @@
 
 instance_name = 'server'
 
-node.set['logstash']['instance'][instance_name]['pattern_templates_cookbook'] =
-  cookbook_name
-
 ################
 # Certificates #
 ################
@@ -17,12 +14,13 @@ include_recipe 'logserver::certs'
 ############
 # Patterns #
 ############
-logstash_pattern 'evertrue patterns' do
-  templates 'evertrue_patterns' => 'evertrue_patterns.erb'
-  instance instance_name
-end
-
 instance_basedir = node['logstash']['instance_default']['basedir']
+
+cookbook_file "#{instance_basedir}/patterns/evertrue_patterns" do
+  owner node['logstash']['instance_default']['user']
+  group node['logstash']['group']
+  notifies :restart, "logstash_service[#{instance_name}]"
+end
 
 ###########
 # Filters #
