@@ -13,8 +13,8 @@ directory '/etc/logstash' do
   recursive true
 end
 
-key = '/etc/logstash/lumberjack.key.pem'
-certificate = '/etc/logstash/lumberjack.crt.pem'
+key = node['et_elk']['server']['config']['input']['lumberjack']['ssl_key']
+certificate = node['et_elk']['server']['config']['input']['lumberjack']['ssl_certificate']
 
 file key do
   content "#{ssl_object['key']}\n"
