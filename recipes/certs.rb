@@ -34,6 +34,7 @@ if node['logserver']['generate_cert']
     expire 30
     key_file key
     notifies :restart, 'logstash_service[server]'
+    not_if { ::File.exist? certificate } # Necessary because of a bug in openssl_x509
   end
 else
   file certificate do
