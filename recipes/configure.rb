@@ -9,8 +9,6 @@ instance_conf_dir =
   "#{node['logstash']['instance'][instance_name]['basedir']}/" \
   "#{instance_name}/etc/conf.d"
 
-node.set['logstash']['instance'][instance_name]['config_templates_cookbook'] =
-  cookbook_name
 node.set['logstash']['instance'][instance_name]['pattern_templates_cookbook'] =
   cookbook_name
 
