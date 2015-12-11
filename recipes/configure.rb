@@ -38,5 +38,6 @@ end
   cookbook_file "#{instance_basedir}/#{instance_name}/etc/conf.d/filter_#{filter}" do
     owner node['logstash']['instance_default']['user']
     group node['logstash']['group']
+    notifies :restart, "logstash_service[#{instance_name}]"
   end
 end
