@@ -4,6 +4,9 @@ driver:
   customize:
     cpus: 2
     memory: 2048
+  network:
+  - - private_network
+    - ip: '192.168.33.11'
 
 provisioner:
   name: chef_zero
