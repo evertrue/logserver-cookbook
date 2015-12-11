@@ -73,15 +73,4 @@ describe 'et_elk::default' do
       its(:stdout) { should match(/Configuration OK/) }
     end
   end
-
-  describe 'input/output config' do
-    %w(
-      input_lumberjack
-      output_elasticsearch
-    ).each do |conf_file|
-      describe file("/opt/logstash/server/etc/conf.d/#{conf_file}") do
-        it { is_expected.to be_file }
-      end
-    end
-  end
 end
