@@ -5,9 +5,6 @@
 # Copyright (c) 2015 EverTrue, inc, All Rights Reserved.
 
 instance_name = 'server'
-instance_conf_dir =
-  "#{node['logstash']['instance'][instance_name]['basedir']}/" \
-  "#{instance_name}/etc/conf.d"
 
 node.set['logstash']['instance'][instance_name]['pattern_templates_cookbook'] =
   cookbook_name
@@ -25,6 +22,8 @@ logstash_pattern 'evertrue patterns' do
   instance instance_name
 end
 
+instance_basedir = node['logstash']['instance_default']['basedir']
+
 ###########
 # Filters #
 ###########
@@ -38,7 +37,7 @@ end
   mesos
   sidekiq
 ).each do |filter|
-  cookbook_file "#{instance_conf_dir}/filter_#{filter}" do
+  cookbook_file "#{instance_basedir}/#{instance_name}/etc/conf.d/filter_#{filter}" do
     owner node['logstash']['instance_default']['user']
     group node['logstash']['group']
     mode  0644
