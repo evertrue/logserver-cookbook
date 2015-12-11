@@ -27,23 +27,6 @@ logstash_pattern 'evertrue patterns' do
   instance instance_name
 end
 
-############
-#  Inputs  #
-############
-logstash_config 'lumberjack input' do
-  templates 'input_lumberjack' => 'input_lumberjack.erb'
-  instance instance_name
-  variables node['logserver']
-  notifies :restart, "logstash_service[#{instance_name}]"
-end
-
-logstash_config 'log4j input' do
-  templates 'input_log4j' => 'input_log4j.erb'
-  instance instance_name
-  variables node['logserver']
-  notifies :restart, "logstash_service[#{instance_name}]"
-end
-
 ###########
 # Filters #
 ###########
@@ -62,14 +45,4 @@ end
     group node['logstash']['group']
     mode  0644
   end
-end
-
-############
-# Outputs  #
-############
-logstash_config 'elasticsearch output' do
-  templates 'output_elasticsearch' => 'output_elasticsearch.erb'
-  instance instance_name
-  variables node['et_elk'][instance_name]
-  notifies :restart, "logstash_service[#{instance_name}]"
 end
