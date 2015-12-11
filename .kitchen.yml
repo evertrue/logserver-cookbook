@@ -2,8 +2,11 @@
 driver:
   name: vagrant
   customize:
-    cpus: 4
-    memory: 4096
+    cpus: 2
+    memory: 2048
+  network:
+  - - private_network
+    - ip: '192.168.33.11'
 
 provisioner:
   name: chef_zero
@@ -17,13 +20,22 @@ suites:
   - name: default
     run_list:
       - recipe[log_data::default]
+      - recipe[log_host_discovery::default]
       - recipe[logserver::default]
       - role[es_master]
-      - recipe[et_logger::forwarder]
+      - recipe[elk_forwarder::default]
     attributes:
       logserver:
         generate_cert: true
       elk_forwarder:
+        config:
+          files:
+            syslog:
+              paths:
+              - /var/log/auth.log
+              - /var/log/syslog
+              fields:
+                type: syslog
         generate_cert: true
         ca_cert:
           self_signed:

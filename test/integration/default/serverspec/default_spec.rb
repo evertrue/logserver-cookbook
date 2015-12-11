@@ -16,18 +16,27 @@ describe 'et_elk::default' do
   end
 
   describe 'log data' do
+    index_date = Time.now.strftime '%Y.%m.%d'
+    result = JSON.parse(
+      Net::HTTP.get(
+        URI(
+          "http://localhost:9200/logstash-#{index_date}/_search" \
+          '?q=message:TEST_LOG_MESSAGE'
+        )
+      )
+    )
+
     it 'inserted into Elasticsearch' do
-      index_date = Time.now.strftime '%Y.%m.%d'
-      expect(
-        JSON.parse(
-          Net::HTTP.get(
-            URI(
-              "http://localhost:9200/logstash-#{index_date}/_search" \
-              '?q=message:TEST_LOG_MESSAGE'
-            )
-          )
-        )['hits']['hits'].first['_source']['message']
-      ).to match(/TEST_LOG_MESSAGE/)
+      expect(result['hits']['hits'].first['_source']['message']).to match(/TEST_LOG_MESSAGE/)
+    end
+
+    it 'contains the right fields' do
+      required_fields = %w(
+        x_input_processor
+        x_proccessed_by
+        x_proccessor_chef_env
+      )
+      expect(required_fields - result['hits']['hits'].first['_source'].keys).to eq []
     end
   end
 
