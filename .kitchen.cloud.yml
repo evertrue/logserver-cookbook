@@ -1,20 +1,31 @@
 ---
 driver:
-  name: vagrant
-  customize:
-    cpus: 2
-    memory: 2048
-  network:
-  - - private_network
-    - ip: '192.168.33.11'
+  name: ec2
+  require_chef_omnibus: true
+  aws_ssh_key_id: <%= ENV['AWS_KEYPAIR_NAME'] %>
+  region: us-east-1
+  availability_zone: us-east-1b
+  security_group_ids: ['ci-testing']
+  instance_type: c3.2xlarge
+  interface: public
+  tags:
+    Name: logserver-ubuntu-1404
+    Type: test
+
+transport:
+  ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
 
 provisioner:
   name: chef_zero
-  config_rb:
-    environment: dev
+  client_rb:
+    environments: dev
 
 platforms:
   - name: ubuntu-14.04
+    driver_config:
+      image_id: ami-9883c6f2
+      tags:
+        Env: public
 
 suites:
   - name: default

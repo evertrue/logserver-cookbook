@@ -256,6 +256,3 @@ DEPENDENCIES
   kitchen-vagrant (~> 0.15)
   rubocop (~> 0.29)
   test-kitchen (~> 1.3)
-
-BUNDLED WITH
-   1.10.6
