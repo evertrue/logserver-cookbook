@@ -51,6 +51,7 @@ suites:
         ca_cert:
           self_signed:
             signing_key: /etc/logstash/lumberjack.key.pem
-      elasticsearch:
-        custom_config:
-          index.number_of_replicas: 0
+      et_elk:
+        elasticsearch:
+          custom_config:
+            index.number_of_replicas: 0
