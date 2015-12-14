@@ -13,8 +13,8 @@ directory '/etc/logstash' do
   recursive true
 end
 
-key = '/etc/logstash/lumberjack.key.pem'
-certificate = '/etc/logstash/lumberjack.crt.pem'
+key = node['et_elk']['server']['config']['input']['lumberjack']['ssl_key']
+certificate = node['et_elk']['server']['config']['input']['lumberjack']['ssl_certificate']
 
 file key do
   content "#{ssl_object['key']}\n"
@@ -34,6 +34,7 @@ if node['logserver']['generate_cert']
     expire 30
     key_file key
     notifies :restart, 'logstash_service[server]'
+    not_if { ::File.exist? certificate } # Necessary because of a bug in openssl_x509
   end
 else
   file certificate do

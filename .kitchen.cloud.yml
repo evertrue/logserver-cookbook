@@ -31,13 +31,22 @@ suites:
   - name: default
     run_list:
       - recipe[log_data::default]
+      - recipe[log_host_discovery::default]
       - recipe[logserver::default]
       - role[es_master]
-      - recipe[et_logger::forwarder]
+      - recipe[elk_forwarder::default]
     attributes:
       logserver:
         generate_cert: true
       elk_forwarder:
+        config:
+          files:
+            syslog:
+              paths:
+              - /var/log/auth.log
+              - /var/log/syslog
+              fields:
+                type: syslog
         generate_cert: true
         ca_cert:
           self_signed:
