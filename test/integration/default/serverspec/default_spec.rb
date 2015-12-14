@@ -4,6 +4,17 @@ require 'net/http'
 
 describe 'et_elk::default' do
   describe 'cluster' do
+    before do
+      # Kibana creates an index with a "number_of_replicas" value of 1, which
+      # causes the cluster to show yellow on a 1 server setup (like our test
+      # environment), so here we change the setting for that one index
+      uri = URI('http://localhost:9200/kibana-int/_settings')
+      req = Net::HTTP::Put.new uri
+      req.body = { 'number_of_replicas' => 0 }.to_json
+      req.content_type = 'application/json'
+      Net::HTTP.start(uri.hostname, uri.port) { |http| http.request(req) }
+    end
+
     it 'shows green status' do
       expect(
         JSON.parse(
