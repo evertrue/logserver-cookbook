@@ -1,3 +1,5 @@
+# This file is managed by Chef
+
 filter {
   if [type] == "java_app" {
 
