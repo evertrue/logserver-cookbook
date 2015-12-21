@@ -1,3 +1,5 @@
+# This file is managed by Chef
+
 # How to make patterns efficiently
 #
 # There are a few common fields that you should probably try to use if a peice of data from your pattern fits in with it. When you can abstract a field, abstract it!
@@ -27,7 +29,7 @@
 MULTILINE_GREEDY (.|\r|\n)*
 
 # Matches a full multiline log message for a single Rails request
-# Example: 
+# Example:
 # I, [2015-10-09T01:51:08.767089 #22307]  INFO -- : Started GET "/some_url" for 123.123.123.123 at 2015-07-09 01:51:08 +0000
 # I, [2015-10-09T01:51:08.768650 #22307]  INFO -- : Processing by SomeController#someaction as JSON
 # I, [2015-10-09T01:51:08.768705 #22307]  INFO -- :   Parameters: {"hash"=>"of parameters"}
