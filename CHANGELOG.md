@@ -2,6 +2,27 @@ logserver cookbook CHANGELOG
 ============================
 This file is used to list changes made in each version of the logserver cookbook.
 
+v3.0.0 (2015-12-22)
+-------------------
+* Cookbook functionality
+    - Bump et_elk to v3
+    - Absorb configuration of a ELK Server Rig from et_elk
+    - Pull Certificate creation code in from et_elk
+    - Modifications to support v2 of `elasticsearch` cookbook
+    - Use attributes to find ssl key and cert
+    - Move inputs/outputs to evertrue/et_elk-cookbook
+    - Ensure that updating filters restarts logstash service
+    - Use a flat file for evertrue_patterns instead of logstash_pattern resource
+    - Use files rather than templates for filters
+    - Add managed by chef headers to filters
+* Testing only
+    - Test for listening ports
+    - Test that elasticsearch and logstash services are running
+    - Create test rig to insert data into Logstash+ES and search for it
+    - Add role es_master in testing so that ES will start up
+    - Add a cloud kitchen file
+    - Kitchen: Use less CPU and memory
+
 v2.0.0 (2015-10-29)
 -------------------
 
