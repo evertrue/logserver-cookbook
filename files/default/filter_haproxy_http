@@ -1,0 +1,19 @@
+# This file is managed by Chef
+
+filter {
+  if [type] == "haproxy_http" {
+    grok {
+      match => ["message", "%{ET_SYSLOGBASE} +%{ET_HAPROXYHTTP_CONTENT}"]
+    }
+
+    date {
+      match => ["timestamp", "ISO8601"]
+      remove_field => ["timestamp"]
+    }
+
+    date {
+      match => ["accept_date", "dd/MMM/YYYY:HH:mm:ss.SSS", "dd/MMM/YYYY:HH:mm:ss.S"]
+      target => ["accept_date"]
+    }
+  }
+}

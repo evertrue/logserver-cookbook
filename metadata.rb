@@ -8,6 +8,7 @@ version          '2.0.0'
 
 supports 'ubuntu', '>= 14.04'
 
-depends 'et_elk', '~> 2.3'
+depends 'et_elk', '~> 3.0'
+depends 'openssl', '~> 4.4'
 
 provides 'logserver'

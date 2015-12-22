@@ -1,0 +1,74 @@
+# This file is managed by Chef
+
+# How to make patterns efficiently
+#
+# There are a few common fields that you should probably try to use if a peice of data from your pattern fits in with it. When you can abstract a field, abstract it!
+#
+#  * timestamp        is pretty much the standard field for the time that will get parsed by a date filter into the @timestamp field.
+#                       * timestamp should be deleted when it is parsed into @timestamp
+#  * message          should be for the meat of the log message
+#  * level            should be a commonly known log level. Common levels are UPPERCASE
+#                       * FATAL, ERROR, WARN, INFO, OK, VERBOSE, DEBUG
+#  * client_ip        should be the IP address of an external Client
+#  * client_port      should be the remote port of an external Client
+#  * http_status_code should be used for an HTTP Status code
+#  * http_verb        should be an HTTP Verb in UPPERCASE
+#  * http_request     should be an HTTP request path starting with a /, i.e. /index.html
+#  * http_host        should be the value of
+#  * http_version     should be the HTTP Version being used
+#  * referrer         should be something that reffered to the request that generated the log, normally a URI
+#  * timezone         should be a timezone when needed
+# About Dates
+#
+# I don't care about the year, month, day, hour, minute, second, or microsecond parts of a timestamp... I want the timestamp part of the log captured in the `timestamp` field
+# and then parsed using the `date` filter.  Adding all those extra fields for year, month, day, ect. is just going to clutter up elasticsearch and the kibana UI and we can already
+# do everything we need with a parsed @timestamp value.  hint: look at the TIMESTAMP_ISO8601 pattern.... it doesn't store any fields within so neither should we.  The only exception
+# to this rule could be timezone as that can give geographical data for certian logs, but even then timezone is barely useful so I leave it out out the captured fields
+#
+
+MULTILINE_GREEDY (.|\r|\n)*
+
+# Matches a full multiline log message for a single Rails request
+# Example:
+# I, [2015-10-09T01:51:08.767089 #22307]  INFO -- : Started GET "/some_url" for 123.123.123.123 at 2015-07-09 01:51:08 +0000
+# I, [2015-10-09T01:51:08.768650 #22307]  INFO -- : Processing by SomeController#someaction as JSON
+# I, [2015-10-09T01:51:08.768705 #22307]  INFO -- :   Parameters: {"hash"=>"of parameters"}
+# I, [2015-10-09T01:51:08.782838 #22307]  INFO -- : request.ip = 123.123.123.123 and request.remote_ip = 234.234.234.234
+# I, [2015-10-09T01:51:08.818618 #22307]  INFO -- : Completed 200 OK in 50ms (Views: 34.2ms | ActiveRecord: 10.5ms)
+RAILS_APP (?m)Started %{WORD:http_verb} "%{URIPATHPARAM:http_request}" for %{IPORHOST:client_ip} at %{TIMESTAMP_ISO8601:timestamp}%{DATA}Processing by (?<controller>[^#]+)#(?<action>\w+) as (?<format>\S+)(?:\n  Parameters: %{DATA:params}\n)?%{DATA:data}Completed %{NUMBER:http_status_code}%{DATA:response_type} in %{NUMBER:totalms}ms ?(\(Views: %{NUMBER:viewms}ms)?(%{DATA}ActiveRecord: %{NUMBER:activerecordms}ms)?%{GREEDYDATA}
+
+# Matches a single line of a Rails app log (staging.log or staging-kafka_consumer.log)
+# Example: "I, [2015-09-09T14:31:57.360253 #57574]  INFO -- The Message"
+RAILS_APP_LINE %{DATA}, \[%{TIMESTAMP_ISO8601:timestamp} #%{POSINT:thread_id}\]  %{GREEDYDATA:level} -- (: )?%{GREEDYDATA:message}
+
+# Example:
+# 2015-10-08T22:54:39.077Z 4758 TID-owm4fywkf SomeJobName JID-b0dee1e4c3a898f3e2407350 INFO: Some Message
+SIDEKIQ %{TIMESTAMP_ISO8601:timestamp} %{POSINT:pid} %{NOTSPACE:thread_id} %{NOTSPACE:sidekiq_job} %{NOTSPACE:job_id} %{NOTSPACE:level}: %{GREEDYDATA:message}
+
+# The common syslog base for all syslog messages from EverTrue (slightly different than default)
+ET_SYSLOGBASE %{SYSLOG5424PRI}%{NONNEGINT:syslog5424_ver} +(?:%{TIMESTAMP_ISO8601:timestamp}|-) +(?:%{HOSTNAME:hostname}|-) +(-|%{SYSLOG5424PRINTASCII:syslog5424_app}) +(-|%{SYSLOG5424PRINTASCII:syslog5424_proc}) +(-|%{SYSLOG5424PRINTASCII:syslog5424_msgid}) +(?:%{SYSLOG5424SD:syslog5424_sd}|-|)
+
+# Parses the content of an HAPROXY log (the part after all the syslog stuff).  Pulled from the HAPROXY_HTTP pattern
+ET_HAPROXYDATE %{DATE}:%{TIME}
+ET_HAPROXYHTTP_CONTENT %{IP:client_ip}:%{INT:client_port} \[%{ET_HAPROXYDATE:accept_date}\] %{NOTSPACE:frontend_name} %{NOTSPACE:backend_name}/%{NOTSPACE:server_name} %{INT:time_request}/%{INT:time_queue}/%{INT:time_backend_connect}/%{INT:time_backend_response}/%{NOTSPACE:time_duration} %{INT:http_status_code} %{NOTSPACE:bytes_read} %{DATA:captured_request_cookie} %{DATA:captured_response_cookie} %{NOTSPACE:termination_state} %{INT:actconn}/%{INT:feconn}/%{INT:beconn}/%{INT:srvconn}/%{NOTSPACE:retries} %{INT:srv_queue}/%{INT:backend_queue} (\{%{HAPROXYCAPTUREDREQUESTHEADERS}\})?( )?(\{%{HAPROXYCAPTUREDRESPONSEHEADERS}\})?( )?"(<BADREQ>|(%{WORD:http_verb} (%{URIPROTO:http_proto}://)?(?:%{USER:http_user}(?::[^@]*)?@)?(?:%{URIHOST:http_host})?(?:%{URIPATHPARAM:http_request})?( HTTP/%{NUMBER:http_version})?))?"
+
+# Common NGINX Paterns
+ET_NGINX_USER [a-zA-Z\.\@\-\+_%]+
+ET_NGINX_DATE_TIME %{YEAR}/%{MONTHNUM}/%{MONTHDAY} %{TIME}
+
+# Parses an NGINX access Log
+ET_NGINXACCESS %{IPORHOST:client_ip} %{ET_NGINX_USER:http_ident} %{ET_NGINX_USER:http_user} \[%{HTTPDATE:timestamp}\] "%{WORD:http_verb} %{URIPATHPARAM:http_request} HTTP/%{NUMBER:http_version}" %{NUMBER:http_status_code} (?:%{NUMBER:bytes}|-) (?:"(?:%{URI:referrer}|-)"|%{QS:referrer}) %{QS:agent}
+
+# Parses an NGINX Error Log
+ET_NGINXERROR %{ET_NGINX_DATE_TIME:timestamp} \[%{WORD:level}\] %{POSINT:pid}#%{NUMBER}: \*%{NUMBER} %{GREEDYDATA:message}
+
+# Parses Mesos Logs to the best of it's ability (Mesos Logs are gross!)
+ET_MESOS_TIMESTAMP %{MONTHNUM}%{MONTHDAY} %{TIME}
+
+ET_MESOS %{DATA:level_short}%{ET_MESOS_TIMESTAMP:timestamp} %{POSINT:thread} %{DATA:file}:%{NUMBER:line}] %{GREEDYDATA:message}
+
+# Singularity Patterns
+ET_SINGULARITY %{WORD:level} +\[%{DATESTAMP:timestamp}\] %{DATA:class}: %{GREEDYDATA:message}
+
+# Java Apps
+ET_JAVA_APP %{DATESTAMP:timestamp} \[%{DATA:tread}\] %{DATA:level} %{DATA:class}[- ]+%{GREEDYDATA:message}(\r|\n)?%{MULTILINE_GREEDY:stacktrace}

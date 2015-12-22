@@ -1,0 +1,20 @@
+# This file is managed by Chef
+
+filter {
+  if [type] == "nginx_access" {
+    grok {
+      match => ["message", "%{ET_NGINXACCESS}"]
+    }
+
+    date {
+      match => [ "timestamp", "dd/MMM/YYYY:HH:mm:ss Z" ]
+      remove_field => [ "timestamp" ]
+    }
+  }
+
+  if [type] == "nginx_error" {
+    grok {
+      match => ["message", "%{ET_NGINXERROR}"]
+    }
+  }
+}

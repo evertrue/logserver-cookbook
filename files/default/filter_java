@@ -1,0 +1,22 @@
+# This file is managed by Chef
+
+filter {
+  if [type] == "java_app" {
+
+    multiline {
+      pattern => "^\d"
+      what => "previous"
+      negate => true
+    }
+
+
+    grok {
+      match => ["message", "%{ET_JAVA_APP}"]
+    }
+
+    date {
+      match => ["timestamp", "MM/dd/YYYY HH:mm:ss,SSS", "ISO8601"]
+      remove_field => ["timestamp"]
+    }
+  }
+}

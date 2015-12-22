@@ -1,0 +1,9 @@
+# This file is managed by Chef
+
+filter {
+    if [client_ip] {
+        geoip {
+          source => 'client_ip'
+        }
+    }
+}

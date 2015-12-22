@@ -3,7 +3,13 @@
   "description": "Role to designate an ElasticSearch master",
   "json_class": "Chef::Role",
   "default_attributes": {
-
+    "et_elk": {
+      "elasticsearch": {
+        "custom_config": {
+          "node.master": true
+        }
+      }
+    }
   },
   "override_attributes": {
 
