@@ -16,5 +16,10 @@ filter {
     grok {
       match => ["message", "%{ET_NGINXERROR}"]
     }
+
+    date {
+      match => ["timestamp", "YYYY/MM/DD HH:mm:ss"]
+      remove_field => ["timestamp"]
+    }
   }
 }
