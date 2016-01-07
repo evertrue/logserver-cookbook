@@ -4,7 +4,7 @@ filter {
   if [type] == "syslog" {
     grok {
       match => {
-        patterns_dir => "/opt/logstash/patterns"
+        patterns_dir => "/etc/logstash/patterns"
         "message" => "%{ET_SYSLOGBASE} +%{GREEDYDATA:message}"
       }
     }

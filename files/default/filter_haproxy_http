@@ -3,7 +3,7 @@
 filter {
   if [type] == "haproxy_http" {
     grok {
-      patterns_dir => "/opt/logstash/patterns"
+      patterns_dir => "/etc/logstash/patterns"
       match => ["message", "%{ET_SYSLOGBASE} +%{ET_HAPROXYHTTP_CONTENT}"]
     }
 

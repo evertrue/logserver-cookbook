@@ -4,7 +4,7 @@
 filter {
   if [type] == "nginx_access" {
     grok {
-      patterns_dir => "/opt/logstash/patterns"
+      patterns_dir => "/etc/logstash/patterns"
       match => ["message", "%{ET_NGINXACCESS}"]
     }
 
@@ -16,7 +16,7 @@ filter {
 
   if [type] == "nginx_error" {
     grok {
-      patterns_dir => "/opt/logstash/patterns"
+      patterns_dir => "/etc/logstash/patterns"
       match => ["message", "%{ET_NGINXERROR}"]
     }
 

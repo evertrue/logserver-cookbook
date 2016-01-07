@@ -12,14 +12,14 @@ include_recipe 'logserver::certs'
 ############
 # Patterns #
 ############
-directory '/opt/logstash/patterns' do
+directory '/etc/logstash/patterns' do
   owner 'logstash'
   group 'logstash'
   mode   0755
   action :create
 end
 
-cookbook_file '/opt/logstash/patterns/evertrue_patterns' do
+cookbook_file '/etc/logstash/patterns/evertrue_patterns' do
   owner 'logstash'
   group 'logstash'
   notifies :restart, 'service[logstash]'
