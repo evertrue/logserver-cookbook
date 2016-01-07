@@ -52,7 +52,7 @@ describe 'et_elk::default' do
   end
 
   describe 'services' do
-    %w(elasticsearch logstash_server).each do |svc|
+    %w(elasticsearch logstash).each do |svc|
       describe service(svc) do
         it { is_expected.to be_running }
       end
@@ -81,14 +81,14 @@ describe 'et_elk::default' do
       rails_app
       syslog
     ).each do |conf_file|
-      describe file("/opt/logstash/server/etc/conf.d/filter_#{conf_file}") do
+      describe file("/etc/logstash/conf.d/filter_#{conf_file}") do
         it { is_expected.to be_file }
         its(:content) { should match 'filter' }
       end
     end
 
-    describe command('/opt/logstash/server/bin/logstash -f ' \
-                     '/opt/logstash/server/etc/conf.d/ --configtest') do
+    describe command('/opt/logstash/bin/logstash -f ' \
+                     '/etc/logstash/conf.d/ --configtest') do
       its(:exit_status) { should eq 0 }
       its(:stdout) { should match(/Configuration OK/) }
     end
