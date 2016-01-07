@@ -2,6 +2,10 @@ logserver cookbook CHANGELOG
 ============================
 This file is used to list changes made in each version of the logserver cookbook.
 
+v4.0.1 (2016-01-08)
+-------------------
+* Sidekiq filter needs a `patterns_dir` definition
+
 v4.0.0 (2016-01-07)
 -------------------
 * Bump et_elk to v4
