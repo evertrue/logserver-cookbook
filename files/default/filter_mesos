@@ -3,6 +3,7 @@
 filter {
   if [type] == "mesos_slave" or [type] == "mesos_master" {
     grok {
+      patterns_dir => "/etc/logstash/patterns"
       match => ["message", "%{ET_MESOS}"]
     }
 
@@ -29,6 +30,7 @@ filter {
     }
 
     grok {
+      patterns_dir => "/etc/logstash/patterns"
       match => ["message", "%{ET_SINGULARITY}"]
     }
 

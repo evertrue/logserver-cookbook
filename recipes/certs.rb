@@ -19,10 +19,10 @@ certificate = node['et_elk']['server']['config']['input']['lumberjack']['ssl_cer
 file key do
   content "#{ssl_object['key']}\n"
   sensitive true
-  user node['logstash']['instance_default']['user']
-  group node['logstash']['group']
+  user 'logstash'
+  group 'logstash'
   mode 0600
-  notifies :restart, 'logstash_service[server]'
+  notifies :restart, 'service[logstash]'
 end
 
 if node['logserver']['generate_cert']
@@ -33,14 +33,14 @@ if node['logserver']['generate_cert']
     country node['logserver']['certs']['self_signed']['country']
     expire 30
     key_file key
-    notifies :restart, 'logstash_service[server]'
+    notifies :restart, 'service[logstash]'
     not_if { ::File.exist? certificate } # Necessary because of a bug in openssl_x509
   end
 else
   file certificate do
     content "#{ssl_object['certificate']}\n"
-    user node['logstash']['instance_default']['user']
-    group node['logstash']['group']
-    notifies :restart, 'logstash_service[server]'
+    user 'logstash'
+    group 'logstash'
+    notifies :restart, 'service[logstash]'
   end
 end

@@ -4,8 +4,6 @@
 #
 # Copyright (c) 2015 EverTrue, inc, All Rights Reserved.
 
-instance_name = 'server'
-
 ################
 # Certificates #
 ################
@@ -14,12 +12,17 @@ include_recipe 'logserver::certs'
 ############
 # Patterns #
 ############
-instance_basedir = node['logstash']['instance_default']['basedir']
+directory '/etc/logstash/patterns' do
+  owner 'logstash'
+  group 'logstash'
+  mode   0755
+  action :create
+end
 
-cookbook_file "#{instance_basedir}/#{instance_name}/patterns/evertrue_patterns" do
-  owner node['logstash']['instance_default']['user']
-  group node['logstash']['group']
-  notifies :restart, "logstash_service[#{instance_name}]"
+cookbook_file '/etc/logstash/patterns/evertrue_patterns' do
+  owner 'logstash'
+  group 'logstash'
+  notifies :restart, 'service[logstash]'
 end
 
 ###########
@@ -35,9 +38,9 @@ end
   mesos
   sidekiq
 ).each do |filter|
-  cookbook_file "#{instance_basedir}/#{instance_name}/etc/conf.d/filter_#{filter}" do
-    owner node['logstash']['instance_default']['user']
-    group node['logstash']['group']
-    notifies :restart, "logstash_service[#{instance_name}]"
+  cookbook_file "/etc/logstash/conf.d/filter_#{filter}" do
+    owner 'logstash'
+    group 'logstash'
+    notifies :restart, 'service[logstash]'
   end
 end
