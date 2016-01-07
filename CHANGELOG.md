@@ -2,7 +2,11 @@ logserver cookbook CHANGELOG
 ============================
 This file is used to list changes made in each version of the logserver cookbook.
 
-v4.0.1 (2016-01-08)
+v4.0.2 (2016-01-07)
+-------------------
+* Put the patterns_dir definition for filter_syslog in the right place
+
+v4.0.1 (2016-01-07)
 -------------------
 * Sidekiq filter needs a `patterns_dir` definition
 
