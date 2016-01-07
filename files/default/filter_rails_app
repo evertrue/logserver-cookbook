@@ -9,6 +9,7 @@ filter {
     }
 
     grok {
+      patterns_dir => "/opt/logstash/patterns"
       match => {
         "message" => "%{RAILS_APP}"
       }
@@ -29,6 +30,7 @@ filter {
 
   if [type] == "rails_basic" {
     grok {
+      patterns_dir => "/opt/logstash/patterns"
       match => {
         "message" => "%{RAILS_APP_LINE}"
       }

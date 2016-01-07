@@ -1,8 +1,10 @@
+
 # This file is managed by Chef
 
 filter {
   if [type] == "nginx_access" {
     grok {
+      patterns_dir => "/opt/logstash/patterns"
       match => ["message", "%{ET_NGINXACCESS}"]
     }
 
@@ -14,6 +16,7 @@ filter {
 
   if [type] == "nginx_error" {
     grok {
+      patterns_dir => "/opt/logstash/patterns"
       match => ["message", "%{ET_NGINXERROR}"]
     }
 
