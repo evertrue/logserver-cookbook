@@ -33,6 +33,7 @@ suites:
       - recipe[log_data::default]
       - recipe[log_host_discovery::default]
       - recipe[logserver::default]
+      - recipe[logserver_postop::start_elasticsearch]
       - role[es_master]
       - recipe[elk_forwarder::default]
     attributes:
