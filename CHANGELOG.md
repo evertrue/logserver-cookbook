@@ -2,6 +2,12 @@ logserver cookbook CHANGELOG
 ============================
 This file is used to list changes made in each version of the logserver cookbook.
 
+v4.0.0 (2016-01-07)
+-------------------
+* Bump et_elk to v4
+    - Drop code for the logstash cookbook in favor of package install
+    - Change filter configs to support version 2 of logstash
+
 v3.0.0 (2015-12-22)
 -------------------
 * Cookbook functionality
