@@ -3,6 +3,7 @@
 filter {
   if [type] == "sidekiq" {
     grok {
+      patterns_dir => "/etc/logstash/patterns"
       match => {
         "message" => "%{SIDEKIQ}"
       }
