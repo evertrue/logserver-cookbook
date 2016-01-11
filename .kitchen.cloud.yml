@@ -35,7 +35,7 @@ suites:
       - recipe[logserver::default]
       - recipe[logserver_postop::start_elasticsearch]
       - role[es_master]
-      - recipe[elk_forwarder::default]
+      - recipe[et_logger::forwarder]
     attributes:
       logserver:
         generate_cert: true
@@ -48,6 +48,10 @@ suites:
                 - /var/log/auth.log
                 - /var/log/syslog
                 document_type: syslog
+      et_logger:
+        generate_cert: true
+      et_logger:
+        skip_server_discovery: true
         generate_cert: true
         ca_cert:
           self_signed:
