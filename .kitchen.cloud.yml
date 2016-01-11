@@ -50,7 +50,6 @@ suites:
                 document_type: syslog
       et_logger:
         generate_cert: true
-      et_logger:
         skip_server_discovery: true
         generate_cert: true
         ca_cert:

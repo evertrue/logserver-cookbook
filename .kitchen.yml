@@ -39,7 +39,6 @@ suites:
                 document_type: syslog
       et_logger:
         generate_cert: true
-      et_logger:
         skip_server_discovery: true
         ca_cert:
           self_signed:
