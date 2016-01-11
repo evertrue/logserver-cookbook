@@ -28,15 +28,15 @@ suites:
     attributes:
       logserver:
         generate_cert: true
-      elk_forwarder:
-        config:
-          files:
-            syslog:
-              paths:
-              - /var/log/auth.log
-              - /var/log/syslog
-              fields:
-                type: syslog
+      filebeat:
+        prospectors:
+          syslog:
+            filebeat:
+              prospectors:
+              - paths:
+                - /var/log/auth.log
+                - /var/log/syslog
+                document_type: syslog
         generate_cert: true
         ca_cert:
           self_signed:

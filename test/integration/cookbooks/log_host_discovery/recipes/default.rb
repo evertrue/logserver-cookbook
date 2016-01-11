@@ -1,1 +1,1 @@
-node.set['elk_forwarder']['config']['network']['servers'] = ["#{node.fqdn}:5043"]
+node.set['filebeat']['config']['output']['logstash']['hosts'] = ["#{node.fqdn}:5043"]
