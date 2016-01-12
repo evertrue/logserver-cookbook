@@ -2,6 +2,13 @@ logserver cookbook CHANGELOG
 ============================
 This file is used to list changes made in each version of the logserver cookbook.
 
+v5.0.0 (2016-01-12)
+-------------------
+* Replace Logstash Forwarder with Filebeat
+* Update attribute namespacing for switch from logstash-forwarder to filebeat
+* Bump et_elk to 5.0
+* Use et_logger instead of elk_forwarder for testing
+
 v4.0.2 (2016-01-07)
 -------------------
 * Put the patterns_dir definition for filter_syslog in the right place
