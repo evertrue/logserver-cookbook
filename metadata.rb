@@ -8,7 +8,7 @@ version          '4.0.2'
 
 supports 'ubuntu', '>= 14.04'
 
-depends 'et_elk', '~> 4.0'
+depends 'et_elk', '~> 5.0'
 depends 'openssl', '~> 4.4'
 
 provides 'logserver'
