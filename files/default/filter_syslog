@@ -5,7 +5,7 @@ filter {
     grok {
       patterns_dir => "/etc/logstash/patterns"
       match => {
-        "message" => "%{ET_SYSLOGBASE} +%{GREEDYDATA:message}"
+        "line" => "%{ET_SYSLOGBASE} +%{GREEDYDATA:message}"
       }
     }
 

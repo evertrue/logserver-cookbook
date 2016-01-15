@@ -5,7 +5,7 @@ filter {
     grok {
       patterns_dir => "/etc/logstash/patterns"
       match => {
-        "message" => "%{SIDEKIQ}"
+        "line" => "%{SIDEKIQ}"
       }
     }
 
