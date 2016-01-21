@@ -68,7 +68,7 @@ ET_MESOS_TIMESTAMP %{MONTHNUM}%{MONTHDAY} %{TIME}
 ET_MESOS %{DATA:level_short}%{ET_MESOS_TIMESTAMP:timestamp} %{POSINT:thread} %{DATA:file}:%{NUMBER:line}] %{GREEDYDATA:message}
 
 # Singularity Patterns
-ET_SINGULARITY %{WORD:level} +\[%{DATESTAMP:timestamp}\] %{DATA:class}: %{GREEDYDATA:message}
+ET_SINGULARITY %{WORD:level} +\[%{TIMESTAMP_ISO8601:timestamp}\] %{DATA:class}: %{GREEDYDATA:message}
 
 # Java Apps
 ET_JAVA_APP %{DATESTAMP:timestamp} \[%{DATA:tread}\] %{DATA:level} %{DATA:class}[- ]+%{GREEDYDATA:message}(\r|\n)?%{MULTILINE_GREEDY:stacktrace}
