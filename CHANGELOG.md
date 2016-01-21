@@ -2,6 +2,10 @@ logserver cookbook CHANGELOG
 ============================
 This file is used to list changes made in each version of the logserver cookbook.
 
+v5.0.2 (2016-01-21)
+-------------------
+* Switch back to grok matching the "message" field
+
 v5.0.1 (2016-01-15)
 -------------------
 * Reflect the fact that with filebeats message is now called line by default
