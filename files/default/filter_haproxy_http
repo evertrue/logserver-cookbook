@@ -4,7 +4,7 @@ filter {
   if [type] == "haproxy_http" {
     grok {
       patterns_dir => "/etc/logstash/patterns"
-      match => ["line", "%{ET_SYSLOGBASE} +%{ET_HAPROXYHTTP_CONTENT}"]
+      match => ["message", "%{ET_SYSLOGBASE} +%{ET_HAPROXYHTTP_CONTENT}"]
     }
 
     date {

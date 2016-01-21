@@ -4,7 +4,7 @@ filter {
   if [type] == "mesos_slave" or [type] == "mesos_master" {
     grok {
       patterns_dir => "/etc/logstash/patterns"
-      match => ["line", "%{ET_MESOS}"]
+      match => ["message", "%{ET_MESOS}"]
     }
 
     date {
@@ -31,7 +31,7 @@ filter {
 
     grok {
       patterns_dir => "/etc/logstash/patterns"
-      match => ["line", "%{ET_SINGULARITY}"]
+      match => ["message", "%{ET_SINGULARITY}"]
     }
 
     date {
