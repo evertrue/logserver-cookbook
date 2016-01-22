@@ -12,7 +12,9 @@ filter {
 
     grok {
       patterns_dir => "/etc/logstash/patterns"
-      match => ["message", "%{ET_JAVA_APP}"]
+      match => {
+        "message" => ["%{ET_JAVA_APP}", "%{COMMONAPACHELOG_MODIFIED}"]
+      }
     }
 
     date {
