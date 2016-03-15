@@ -16,7 +16,7 @@ MethodLength:
 CyclomaticComplexity:
   Max: 10
 
-SingleSpaceBeforeFirstArg:
+SpaceBeforeFirstArg:
   Exclude:
     - metadata.rb
 
