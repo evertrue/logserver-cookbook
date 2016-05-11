@@ -25,7 +25,11 @@ suites:
       - recipe[logserver_postop::start_elasticsearch]
       - role[es_master]
       - recipe[et_logger::forwarder]
+      - recipe[et_logger]
+      - recipe[rsyslog::client]
     attributes:
+      rsyslog:
+        remote_logs: true
       logserver:
         generate_cert: true
       filebeat:

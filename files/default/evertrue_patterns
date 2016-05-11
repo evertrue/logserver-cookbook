@@ -46,7 +46,7 @@ RAILS_APP_LINE %{DATA}, \[%{TIMESTAMP_ISO8601:timestamp} #%{POSINT:thread_id}\] 
 SIDEKIQ %{TIMESTAMP_ISO8601:timestamp} %{POSINT:pid} %{NOTSPACE:thread_id} %{NOTSPACE:sidekiq_job} %{NOTSPACE:job_id} %{NOTSPACE:level}: %{GREEDYDATA:message}
 
 # The common syslog base for all syslog messages from EverTrue (slightly different than default)
-ET_SYSLOGBASE %{SYSLOG5424PRI}%{NONNEGINT:syslog5424_ver} +(?:%{TIMESTAMP_ISO8601:timestamp}|-) +(?:%{HOSTNAME:hostname}|-) +(-|%{SYSLOG5424PRINTASCII:syslog5424_app}) +(-|%{SYSLOG5424PRINTASCII:syslog5424_proc}) +(-|%{SYSLOG5424PRINTASCII:syslog5424_msgid}) +(?:%{SYSLOG5424SD:syslog5424_sd}|-|)
+ET_SYSLOGBASE <%{NONNEGINT:priority}>%{NONNEGINT:protocol_version} +(?:%{TIMESTAMP_ISO8601:timestamp}|-) +(?:%{HOSTNAME:hostname}|-) +(-|%{SYSLOG5424PRINTASCII:application}) +(-|%{SYSLOG5424PRINTASCII:process_id}) +(-|%{SYSLOG5424PRINTASCII:message_id}) +(?:%{SYSLOG5424SD:syslog5424_sd}|-|)
 
 # Parses the content of an HAPROXY log (the part after all the syslog stuff).  Pulled from the HAPROXY_HTTP pattern
 ET_HAPROXYDATE %{DATE}:%{TIME}
