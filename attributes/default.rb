@@ -1,1 +1,1 @@
-node.override['storage'] = node['logserver']['storage']
+override['storage'] = node['logserver']['storage']
