@@ -16,7 +16,8 @@
           "vol1": {
             "device": "/dev/xvde",
             "size": 2,
-            "delete_on_termination": true
+            "delete_on_termination": true,
+            "volume_type": "gp2"
           }
         }
       }
