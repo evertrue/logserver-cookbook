@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'json'
+require 'yaml'
 require 'net/http'
 
 describe 'et_elk::default' do
@@ -92,5 +93,19 @@ describe 'et_elk::default' do
       its(:exit_status) { should eq 0 }
       its(:stdout) { should match(/Configuration OK/) }
     end
+  end
+end
+
+describe 'logserver::configure' do
+  let(:es_yaml) { YAML.load_file '/etc/elasticsearch/elasticsearch.yml' }
+
+  it 'set data path to EBS volume' do
+    expect(es_yaml['path.data']).to eq '/mnt/ebs0/elasticsearch/data'
+  end
+end
+
+describe 'storage' do
+  describe file '/mnt/ebs0' do
+    it { is_expected.to be_mounted.with device: '/dev/xvde' }
   end
 end
