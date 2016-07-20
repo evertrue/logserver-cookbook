@@ -2,6 +2,16 @@ logserver cookbook CHANGELOG
 ============================
 This file is used to list changes made in each version of the logserver cookbook.
 
+v6.0.0 (2016-07-19)
+-------------------
+* Bump et_elk to v6.0
+* Move all testing to ec2
+* Use override instead of set to set attributes
+* Attributes: set storage type to `ebs`
+* Test on Chef 12.10.24
+* Use COMMONAPACHELOG_MODIFIED to parse DropWizard request logs
+* Singularity timestamp is actually TIMESTAMP_ISO8601
+
 v5.0.2 (2016-01-21)
 -------------------
 * Switch back to grok matching the "message" field
