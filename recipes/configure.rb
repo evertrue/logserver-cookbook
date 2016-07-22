@@ -30,6 +30,7 @@ end
 ###########
 %w(
   000_common
+  cassandra_system
   syslog
   rails_app
   java
