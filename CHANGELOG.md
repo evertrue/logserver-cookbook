@@ -2,6 +2,10 @@ logserver cookbook CHANGELOG
 ============================
 This file is used to list changes made in each version of the logserver cookbook.
 
+v6.1.0 (2016-07-22)
+-------------------
+* Add cassandra_system log filter
+
 v6.0.0 (2016-07-19)
 -------------------
 * Bump et_elk to v6.0
