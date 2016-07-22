@@ -5,7 +5,7 @@ filter {
     grok {
       match => {
         "message" => [
-          "%{WORD:level}\s+\[%{DATA:thread}\]\s+(?<logtime>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3})\s+%{JAVACLASS:srcclass}:\d+ - %{GREEDYDATA:data}", "%{WORD:level}\s+\[%{DATA:thread}\]\s+(?<logtime>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3})\s+%{DATA:worker}\s+%{JAVACLASS:srcclass}:\d+ - %{GREEDYDATA:data}"
+          "%{WORD:level}\s+\[%{DATA:thread}\]\s+(?<timestamp>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3})\s+%{JAVACLASS:srcclass}:\d+ - %{GREEDYDATA:data}", "%{WORD:level}\s+\[%{DATA:thread}\]\s+(?<timestamp>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3})\s+%{DATA:worker}\s+%{JAVACLASS:srcclass}:\d+ - %{GREEDYDATA:data}"
         ]
       }
     }
