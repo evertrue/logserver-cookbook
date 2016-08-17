@@ -2,6 +2,10 @@ logserver cookbook CHANGELOG
 ============================
 This file is used to list changes made in each version of the logserver cookbook.
 
+v6.1.1 (2016-08-17)
+-------------------
+* Add Consul definition
+
 v6.1.0 (2016-07-22)
 -------------------
 * Add cassandra_system log filter
