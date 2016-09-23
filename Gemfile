@@ -1,14 +1,6 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
-gem 'berkshelf', '~> 3.2'
-
-group :unit do
-  gem 'foodcritic', '~> 4.0'
-  gem 'rubocop',    '~> 0.29'
-  gem 'chefspec',   '~> 4.2'
-end
-
-group :integration do
-  gem 'test-kitchen',    '~> 1.3'
-  gem 'kitchen-vagrant', '~> 0.15'
-end
+gem 'berkshelf', git: 'git@github.com:berkshelf/berkshelf.git'
+gem 'solve', git: 'git@github.com:berkshelf/solve.git', ref: 'v3.0.1'
+gem 'mixlib-archive', git: 'git@github.com:chef/mixlib-archive.git'
+gem 'awsutils', git: 'git@github.com:evertrue/awsutils.git'
