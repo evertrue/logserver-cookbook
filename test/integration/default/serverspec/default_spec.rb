@@ -39,7 +39,7 @@ describe 'et_elk::default' do
     )
 
     it 'inserted into Elasticsearch' do
-      expect(result['hits']['hits'].first['_source']['message']).to match(/TEST_LOG_MESSAGE/)
+      expect(result['hits']['hits'].first['_source']['message'].first).to match(/TEST_LOG_MESSAGE/)
     end
 
     it 'contains the right fields' do
