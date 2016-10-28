@@ -1,6 +1,6 @@
 # Elasticsearch Upgrade Procedure:
 
-1. Converge new Chef version
+1. Converge Chef
 2. Install the new version of ElasticSearch:
 ```
 $ dpkg -i /var/chef/cache/elasticsearch-2.4.0.deb
