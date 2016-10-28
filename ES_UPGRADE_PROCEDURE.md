@@ -9,4 +9,8 @@ $ dpkg -i /var/chef/cache/elasticsearch-2.4.0.deb
 ```
 rm -rf /usr/share/elasticsearch/plugins/*
 ```
+4. Restart Elasticsearch:
+```
+service elasticsearch restart
+```
 4. Converge chef again
