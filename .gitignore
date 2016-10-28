@@ -16,3 +16,5 @@ bin/*
 .kitchen.list.yml
 
 Gemfile.lock
+
+LATEST_CHANGELOG.md
