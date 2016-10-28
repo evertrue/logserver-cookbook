@@ -32,6 +32,7 @@ suites:
   - name: default
     run_list:
       - recipe[aws::ec2_hints]
+      - recipe[et_logger]
       - recipe[log_data::default]
       - recipe[log_host_discovery::default]
       - recipe[logserver::default]
