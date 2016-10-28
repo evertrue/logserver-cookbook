@@ -2,6 +2,10 @@ logserver cookbook CHANGELOG
 ============================
 This file is used to list changes made in each version of the logserver cookbook.
 
+v6.1.2 (2016-10-28)
+-------------------
+* Switch to "Releases" changelog
+
 v6.1.1 (2016-08-17)
 -------------------
 * Add Consul definition
