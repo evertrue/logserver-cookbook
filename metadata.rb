@@ -4,7 +4,7 @@ maintainer_email 'devops@evertrue.com'
 license          'all_rights'
 description      'Installs/Configures logserver'
 long_description 'Installs/Configures logserver'
-version          '6.1.2'
+version          '6.1.3'
 
 supports 'ubuntu', '>= 14.04'
 
