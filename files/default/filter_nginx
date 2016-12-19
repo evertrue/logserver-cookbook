@@ -9,8 +9,8 @@ filter {
     }
 
     date {
-      match => [ "timestamp", "dd/MMM/YYYY:HH:mm:ss Z" ]
-      remove_field => [ "timestamp" ]
+      match => [ "timestamp_ms", "UNIX" ]
+      remove_field => [ "timestamp", "timestamp_ms" ]
     }
   }
 
