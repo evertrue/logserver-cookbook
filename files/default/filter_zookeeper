@@ -1,0 +1,28 @@
+# This file is managed by Chef
+
+filter {
+  if [type] == "zookeeper" {
+
+    multiline {
+      pattern => "^%{TIMESTAMP_ISO8601}"
+      what => "previous"
+      negate => true
+    }
+
+    mutate {
+      rename => { "message" => "raw_message" }
+    }
+
+    grok {
+      patterns_dir => "/etc/logstash/patterns"
+      match => {
+        "raw_message" => ["%{ET_ZOOKEEPER}"]
+      }
+    }
+
+    date {
+      match => ["timestamp", "yyyy-MM-dd HH:mm:ss,SSS"]
+      remove_field => ["timestamp"]
+    }
+  }
+}

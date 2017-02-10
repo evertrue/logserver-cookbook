@@ -29,26 +29,63 @@ describe 'et_elk::default' do
 
   describe 'log data' do
     index_date = Time.now.strftime '%Y.%m.%d'
-    result = JSON.parse(
-      Net::HTTP.get(
-        URI(
-          "http://localhost:9200/logstash-#{index_date}/_search" \
-          '?q=message:TEST_LOG_MESSAGE'
+
+    describe 'syslog' do
+      result = JSON.parse(
+        Net::HTTP.get(
+          URI(
+            "http://localhost:9200/logstash-#{index_date}/_search" \
+            '?q=message:TEST_LOG_MESSAGE'
+          )
         )
       )
-    )
 
-    it 'inserted into Elasticsearch' do
-      expect(result['hits']['hits'].first['_source']['message']).to match(/TEST_LOG_MESSAGE/)
+      it 'inserted into Elasticsearch' do
+        expect(result['hits']['hits'].first['_source']['message']).to match(/TEST_LOG_MESSAGE/)
+      end
+
+      it 'contains the right fields' do
+        required_fields = %w(
+          x_input_processor
+          x_proccessed_by
+          x_proccessor_chef_env
+        )
+        expect(required_fields - result['hits']['hits'].first['_source'].keys).to eq []
+      end
     end
 
-    it 'contains the right fields' do
-      required_fields = %w(
-        x_input_processor
-        x_proccessed_by
-        x_proccessor_chef_env
+    describe 'zookeeper' do
+      result = JSON.parse(
+        Net::HTTP.get(
+          URI(
+            "http://localhost:9200/logstash-#{index_date}/_search" \
+            '?q=type:zookeeper%20AND%20message:TEST_ZK_LOG_MESSAGE'
+          )
+        )
       )
-      expect(required_fields - result['hits']['hits'].first['_source'].keys).to eq []
+
+      it 'inserted into Elasticsearch' do
+        expect(result['hits']['hits'].first['_source']['message']).to match(/TEST_ZK_LOG_MESSAGE/)
+      end
+
+      it 'contains the right fields' do
+        required_fields = %w(
+          x_input_processor
+          x_proccessed_by
+          x_proccessor_chef_env
+          myid
+          level
+          thread
+        )
+        expect(required_fields - result['hits']['hits'].first['_source'].keys).to eq []
+      end
+
+      it 'did not fail the grok parse' do
+        expect(
+          result['hits']['hits'].first['_source']['tags'] &&
+            result['hits']['hits'].first['_source']['tags'].include?('_grokparsefailure')
+        ).to eq (false||nil)
+      end
     end
   end
 
@@ -81,6 +118,7 @@ describe 'et_elk::default' do
       nginx
       rails_app
       syslog
+      zookeeper
     ).each do |conf_file|
       describe file("/etc/logstash/conf.d/filter_#{conf_file}") do
         it { is_expected.to be_file }

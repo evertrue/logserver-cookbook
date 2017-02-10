@@ -38,6 +38,7 @@ end
   nginx
   mesos
   sidekiq
+  zookeeper
 ).each do |filter|
   cookbook_file "/etc/logstash/conf.d/filter_#{filter}" do
     owner 'logstash'
