@@ -71,7 +71,7 @@ ET_MESOS %{DATA:level_short}%{ET_MESOS_TIMESTAMP:timestamp} %{POSINT:thread} %{D
 ET_SINGULARITY %{WORD:level} +\[%{TIMESTAMP_ISO8601:timestamp}\] %{DATA:class}: %{GREEDYDATA:message}
 
 # Java Apps
-ET_JAVA_APP %{DATESTAMP:timestamp} \[%{DATA:tread}\] %{DATA:level} %{DATA:class}[- ]+%{GREEDYDATA:message}(\r|\n)?%{MULTILINE_GREEDY:stacktrace}
+ET_JAVA_APP %{DATESTAMP:timestamp} \[%{DATA:thread}\] %{DATA:level} %{DATA:class}[- ]+%{GREEDYDATA:message}(\r|\n)?%{MULTILINE_GREEDY:stacktrace}
 
 # Slight modification on the standard matcher
 COMMONAPACHELOG_MODIFIED %{IPORHOST:clientip} %{HTTPDUSER:ident} +%{USER:auth} +\[%{HTTPDATE:timestamp}\] "(?:%{WORD:verb} %{NOTSPACE:request}(?: HTTP/%{NUMBER:httpversion})?|%{DATA:rawrequest})" %{NUMBER:response} (?:%{NUMBER:bytes}|-)
