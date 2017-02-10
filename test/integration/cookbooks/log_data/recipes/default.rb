@@ -33,5 +33,4 @@ execute 'log some stuff' do
       false
     end
   )
-  notifies :run, "ruby_block[wait #{wait_time} seconds]" # Give filebeats some time to pick them up
 end
