@@ -9,6 +9,6 @@ version          '6.1.3'
 supports 'ubuntu', '>= 14.04'
 
 depends 'et_elk', '~> 6.0'
-depends 'openssl', '~> 4.4'
+depends 'openssl', '>= 4.4'
 
 provides 'logserver'
