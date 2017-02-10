@@ -72,6 +72,7 @@ ET_SINGULARITY %{WORD:level} +\[%{TIMESTAMP_ISO8601:timestamp}\] %{DATA:class}: 
 
 # Java Apps
 ET_JAVA_APP %{DATESTAMP:timestamp} \[%{DATA:thread}\] %{DATA:level} %{DATA:class}[- ]+%{GREEDYDATA:message}(\r|\n)?%{MULTILINE_GREEDY:stacktrace}
+ET_ZOOKEEPER %{TIMESTAMP_ISO8601:timestamp} \[myid:%{NONNEGINT:myid}\] - %{LOGLEVEL:level}  \[%{DATA:thread}\] - %{GREEDYDATA:message}(\r|\n)?%{MULTILINE_GREEDY:stacktrace}
 
 # Slight modification on the standard matcher
 COMMONAPACHELOG_MODIFIED %{IPORHOST:clientip} %{HTTPDUSER:ident} +%{USER:auth} +\[%{HTTPDATE:timestamp}\] "(?:%{WORD:verb} %{NOTSPACE:request}(?: HTTP/%{NUMBER:httpversion})?|%{DATA:rawrequest})" %{NUMBER:response} (?:%{NUMBER:bytes}|-)
