@@ -1,0 +1,58 @@
+# This file is managed by Chef
+
+filter {
+  if [type] == "elasticsearch_syslog" {
+    mutate {
+      rename => { "message" => "raw_message" }
+    }
+
+    grok {
+      patterns_dir => "/etc/logstash/patterns"
+      match => {
+        "raw_message" => "%{ET_SYSLOGBASE} +%{GREEDYDATA:message}"
+      }
+    }
+
+    date {
+      match => ["timestamp", "ISO8601"]
+      remove_field => ["timestamp"]
+    }
+  }
+
+  if [type] == "elasticsearch_system" {
+    mutate {
+      rename => { "message" => "raw_message" }
+    }
+
+    grok {
+      match => [ "raw_message", "\[%{TIMESTAMP_ISO8601:timestamp}\]\[%{DATA:severity}%{SPACE}\]\[%{DATA:source}%{SPACE}\]%{SPACE}(?<message>(.|\r|\n)*)" ]
+    }
+
+    date {
+      match => ["timestamp", "YYYY-MM-dd HH:mm:ss,SSS"]
+      remove_field => ["timestamp"]
+    }
+  }
+
+  if [type] == "elasticsearch_slowlog" {
+    mutate {
+      rename => { "message" => "raw_message" }
+    }
+
+    grok {
+      match => [ "raw_message", "took\[%{DATA:took}\], took_millis\[%{NUMBER:took_millis}\], types\[%{DATA:types}\], stats\[%{DATA:stats}\], search_type\[%{DATA:search_type}\], total_shards\[%{NUMBER:total_shards}\], source\[%{DATA:source_query}\], extra_source\[%{DATA:extra_source}\]," ]
+    }
+
+    date {
+      match => ["timestamp", "YYYY-MM-dd HH:mm:ss,SSS"]
+      remove_field => ["timestamp"]
+    }
+  }
+
+  if [type] == "elasticsearch_deprecation" {
+    date {
+      match => ["timestamp", "YYYY-MM-dd HH:mm:ss,SSS"]
+      remove_field => ["timestamp"]
+    }
+  }
+}
