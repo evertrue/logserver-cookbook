@@ -60,7 +60,7 @@ ET_NGINX_DATE_TIME %{YEAR}/%{MONTHNUM}/%{MONTHDAY} %{TIME}
 ET_NGINXACCESS %{IPORHOST:client_ip} %{IPORHOST:loadbalancer_ip} - %{ET_NGINX_USER:http_user} \[%{HTTPDATE:timestamp} %{BASE10NUM:timestamp_ms}\] "%{WORD:http_verb} %{URIPATHPARAM:http_request} HTTP/%{NUMBER:http_version}" %{NUMBER:http_status_code} (?:%{NUMBER:bytes}|-) (?:"(?:%{URI:referrer}|-)"|%{QS:referrer}) %{QS:agent} (?:%{BASE16NUM:application_key}|-) %{QS:authorization_provider}
 
 # Parses an NGINX Error Log
-ET_NGINXERROR %{ET_NGINX_DATE_TIME:timestamp} \[%{WORD:level}\] %{POSINT:pid}#%{NUMBER}: \*%{NUMBER} %{GREEDYDATA:message}
+ET_NGINXERROR %{ET_NGINX_DATE_TIME:timestamp} \[%{WORD:level}\] %{POSINT:pid}#%{NUMBER}: %{GREEDYDATA:message}
 
 # Parses Mesos Logs to the best of it's ability (Mesos Logs are gross!)
 ET_MESOS_TIMESTAMP %{MONTHNUM}%{MONTHDAY} %{TIME}
