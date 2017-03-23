@@ -2,6 +2,11 @@
 
 filter {
   if [type] == "cassandra_system" {
+    multiline {
+      pattern => "^! "
+      what => "previous"
+    }
+
     grok {
       match => {
         "message" => [
