@@ -5,13 +5,14 @@ driver:
   aws_ssh_key_id: <%= ENV['AWS_KEYPAIR_NAME'] %>
   region: us-east-1
   availability_zone: us-east-1b
-  security_group_ids: ['ci-testing']
-  instance_type: c3.2xlarge
-  interface: public
+  security_group_ids: ['sg-97e55ef2']
+  interface: private
   iam_profile_name: test-ebs-attachment
+  subnet_id: subnet-a792da8f
   tags:
-    Name: logserver-ubuntu-1404
+    Env: dev
     Type: test
+    Operator: <%= ENV['USER'] %>
 
 transport:
   name: sftp
@@ -24,9 +25,16 @@ provisioner:
 
 platforms:
   - name: ubuntu-14.04
-    driver_config:
+    driver:
+      instance_type: c3.large
       tags:
-        Env: public
+        Name: logserver-default-ubuntu-1404
+  - name: ubuntu-16.04
+    driver:
+      instance_type: i3.large
+      image_id: ami-4e952658
+      tags:
+        Name: logserver-default-ubuntu-1404
 
 suites:
   - name: default
