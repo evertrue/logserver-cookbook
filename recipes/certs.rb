@@ -27,7 +27,7 @@ end
 
 if node['logserver']['generate_cert']
   openssl_x509 certificate do
-    common_name node['fqdn']
+    common_name lazy { node['fqdn'] }
     org node['logserver']['certs']['self_signed']['org']
     org_unit node['logserver']['certs']['self_signed']['org_unit']
     country node['logserver']['certs']['self_signed']['country']
