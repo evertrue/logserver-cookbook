@@ -8,6 +8,7 @@ group :integration do
   # cookbook 'et_kibana_lwrp', path: '../et_kibana_lwrp'
   cookbook 'aws'
   cookbook 'et_logger', '>= 4.0.0'
+  cookbook 'et_hostname'
   cookbook 'log_data', path: 'test/integration/cookbooks/log_data'
   cookbook 'log_host_discovery', path: 'test/integration/cookbooks/log_host_discovery'
   cookbook 'logserver_postop', path: 'test/integration/cookbooks/logserver_postop'
