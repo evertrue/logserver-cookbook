@@ -39,6 +39,7 @@ platforms:
 suites:
   - name: default
     run_list:
+      - recipe[apt]
       - recipe[aws::ec2_hints]
       - recipe[et_hostname]
       - recipe[et_logger]
