@@ -31,6 +31,7 @@ end
 %w(
   000_common
   cassandra_system
+  elasticsearch
   syslog
   rails_app
   java
